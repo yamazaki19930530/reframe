@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>考察一覧 — reframe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .site-main { max-width: 920px; margin: 0 auto; padding: 48px var(--page-pad) 80px; }
+
+    /* Page header */
+    .page-header { margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--fg); }
+    .page-title { font-family: var(--serif); font-size: 48px; font-weight: 400; letter-spacing: -0.01em; margin-bottom: 12px; }
+    .page-subtitle { font-size: 13px; color: var(--fg-mid); }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .filter-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--fg-light);
+      padding: 10px 20px 10px 0;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .filter-btn:hover { color: var(--fg-mid); }
+
+    .filter-btn.active {
+      color: var(--fg);
+      font-weight: 500;
+    }
+
+    .filter-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: calc(100% - 20px);
+      height: 1.5px;
+      background: var(--fg);
+    }
+
+    /* Essay list */
+    .essays-list { display: flex; flex-direction: column; gap: 0; }
+
+    .essay-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid var(--border-light);
+      cursor: pointer;
+      transition: background 0.18s;
+      text-decoration: none;
+    }
+
+    .essay-item:hover { background: color-mix(in srgb, var(--bg) 80%, var(--fg) 4%); }
+    .essay-item:hover .essay-arrow { opacity: 1; transform: translateX(0); }
+
+    .essay-item-img {
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      background: repeating-linear-gradient(-45deg, var(--border) 0, var(--border) 1px, var(--border-light) 1px, var(--border-light) 7px);
+    }
+
+    .essay-item-body {
+      padding: 24px 0 24px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .essay-category {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--fg-light);
+      margin-bottom: 8px;
+    }
+
+    .essay-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.55;
+      color: var(--fg);
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    .essay-excerpt {
+      font-size: 12px;
+      color: var(--fg-mid);
+      line-height: 1.9;
+    }
+
+    .essay-item-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    .essay-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .essay-date { font-size: 11px; color: var(--fg-light); letter-spacing: 0.04em; }
+
+    .essay-tag {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--fg-light);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .essay-item:hover .essay-tag { border-color: var(--fg-mid); color: var(--fg-mid); }
+
+    .essay-arrow {
+      font-size: 14px;
+      color: var(--fg-mid);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    /* Featured (first item) */
+    .essay-item.featured {
+      grid-template-columns: 1fr;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    .essay-item.featured .essay-item-img {
+      aspect-ratio: 21/8;
+    }
+
+    .essay-item.featured .essay-item-body {
+      padding: 28px 0 28px 0;
+    }
+
+    .essay-item.featured .essay-title {
+      font-size: 28px;
+    }
+
+    /* Load more */
+    .load-more-wrap { text-align: center; margin-top: 40px; }
+
+    .load-more-btn {
+      background: none;
+      border: 1px solid var(--border);
+      padding: 12px 40px;
+      font-family: var(--sans);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--fg-mid);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .load-more-btn:hover { border-color: var(--fg); color: var(--fg); }
+
+    @media (max-width: 640px) {
+      .essay-item { grid-template-columns: 1fr; }
+      .essay-item-img { aspect-ratio: 16/9; }
+      .essay-item-body { padding: 16px 0; }
+      .essay-item.featured .essay-item-img { aspect-ratio: 16/9; }
+      .filter-bar { flex-wrap: wrap; gap: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+  <a href="index.html">ホーム</a>
+  <a href="essays.html">考察一覧</a>
+  <a href="statement.html">このサイトについて</a>
+  <a href="contact.html">お問い合わせ</a>
+</div>
+
+<!-- Search overlay -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-form">
+    <button class="search-close" id="searchClose">✕</button>
+    <input class="search-input" type="text" placeholder="キーワードで検索..." />
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-top">映画・ドラマの考察メディア
+    <button class="dark-toggle" id="darkToggle" aria-label="ダークモード切替"></button>
+  </div>
+  <div class="header-main">
+    <a class="logo" href="index.html">
+      <span class="logo-text">reframe</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">ホーム</a>
+      <a href="essays.html" class="active">考察一覧</a>
+      <a href="statement.html">このサイトについて</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="nav-search" id="searchBtn" aria-label="検索">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="site-main">
+  <div class="page-header fade-in">
+    <h1 class="page-title">考察一覧</h1>
+    <p class="page-subtitle">映画・ドラマの物語構造・テーマ・演出を読み解く記事。</p>
+  </div>
+
+  <div class="filter-bar fade-in">
+    <button class="filter-btn active" data-filter="all">すべて</button>
+    <button class="filter-btn" data-filter="映画">映画</button>
+    <button class="filter-btn" data-filter="ドラマ">ドラマ</button>
+    <button class="filter-btn" data-filter="アニメ">アニメ</button>
+  </div>
+
+  <div class="essays-list" id="essaysList"></div>
+
+  <div class="load-more-wrap fade-in">
+    <button class="load-more-btn" id="loadMoreBtn">もっと見る</button>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a class="footer-logo" href="index.html">
+        <span class="logo-text-sm">reframe</span>
+      </a>
+      <nav class="footer-nav">
+        <a href="index.html">ホーム</a>
+        <a href="essays.html">考察一覧</a>
+        <a href="statement.html">このサイトについて</a>
+        <a href="contact.html">お問い合わせ</a>
+      </nav>
+      <div class="footer-social"><a href="#">X</a><a href="#">Instagram</a></div>
+    </div>
+    <div class="footer-bottom">© 2024 reframe &nbsp;|&nbsp; <a href="privacy.html" style="color:var(--fg-light);border-bottom:1px solid var(--border-light);">プライバシーポリシー</a></div>
+  </div>
+</footer>
+
+<script>
+  const essays = [
+    { title: '夢の中の階層が示す「無意識の構造」について', category: '映画「インセプション」', genre: '映画', excerpt: '何層にも重なる夢の階層は、単なるSF的な設定ではなく、人間の無意識の構造そのものを映し出しているのではないでしょうか。', date: '2024.06.01', tags: ['夢', '無意識'], featured: true, href: 'article.html' },
+    { title: '「小さな幸せ」の編集がつくる物語の余白', category: '映画「アメリ」', genre: '映画', excerpt: '日常の中の繊細な瞬間を丁寧に拾い上げる映像編集。そのリズムが観客の感情にどのような影響を与えているのかを考察します。', date: '2024.05.30', tags: ['編集', '幸福論'], href: 'article.html' },
+    { title: '記憶と時間の歪みが生む事件の「真相」', category: 'ドラマ「TRUE DETECTIVE」シーズン1', genre: 'ドラマ', excerpt: '断片的に語られる記憶と、錯綜する時間構造が示すのは、事件の真相というよりも人間の内面なのかもしれません。', date: '2024.05.28', tags: ['記憶', '時間'], href: 'article.html' },
+    { title: '希望は「制度の外側」にあるのか', category: '映画「ショーシャンクの空に」', genre: '映画', excerpt: '希望の象徴として語られるラストシーン。その本質は制度に対する静かな抵抗としての意味を持っているのではないでしょうか。', date: '2024.05.25', tags: ['希望', '自由'], href: 'article.html' },
+    { title: '名前を奪われることの象徴性', category: '映画「千と千尋の神隠し」', genre: 'アニメ', excerpt: '「名前」は自己の存在を支える根拠的なもの。千尋が経験する名前の喪失と回復の過程を通して、アイデンティティを考えます。', date: '2024.05.22', tags: ['アイデンティティ', '名前'], href: 'article.html' },
+    { title: '「笑い」の裏にある社会のまなざし', category: '映画「JOKER」', genre: '映画', excerpt: 'ジョーカーの笑いは、彼自身の感情であると同時に、社会の視線を映し出す鏡でもあります。その構造を読み解きます。', date: '2024.05.20', tags: ['社会', '笑い'], href: 'article.html' },
+    { title: '計画の緻密さが映す「信頼」のかたち', category: 'ドラマ「ペーパー・ハウス」', genre: 'ドラマ', excerpt: '緻密な計画の根底にあるのは、メンバー同士の信頼関係です。その構造と崩壊のリスクについて考察します。', date: '2024.05.18', tags: ['計画', '信頼'], href: 'article.html' },
+    { title: '神話構造で読み解くスター・ウォーズ', category: '映画「スター・ウォーズ」', genre: '映画', excerpt: 'ジョーゼフ・キャンベルの英雄の旅に照らし合わせると、ルーカスの物語設計の精巧さが浮かび上がります。', date: '2024.05.10', tags: ['神話', '英雄譚'], href: 'article.html' },
+  ];
+
+  const PER_PAGE = 5;
+  let shown = 0;
+  let currentFilter = 'all';
+
+  function filtered() {
+    return currentFilter === 'all' ? essays : essays.filter(e => e.genre === currentFilter);
+  }
+
+  function renderItem(e, featured) {
+    const div = document.createElement('a');
+    div.className = 'essay-item fade-in' + (featured ? ' featured' : '');
+    div.href = e.href || 'article.html';
+    div.dataset.genre = e.genre;
+    div.innerHTML = `
+      <div class="essay-item-img"></div>
+      <div class="essay-item-body">
+        <div class="essay-item-top">
+          <div class="essay-category">${e.category}</div>
+          <div class="essay-title">${e.title}</div>
+          <div class="essay-excerpt">${e.excerpt}</div>
+        </div>
+        <div class="essay-item-bottom">
+          <div class="essay-meta">
+            <span class="essay-date">${e.date}</span>
+            ${e.tags.map(t => `<span class="essay-tag">${t}</span>`).join('')}
+          </div>
+          <span class="essay-arrow">→</span>
+        </div>
+      </div>
+    `;
+    return div;
+  }
+
+  function renderMore() {
+    const list = filtered();
+    const container = document.getElementById('essaysList');
+    const end = Math.min(shown + PER_PAGE, list.length);
+    for (let i = shown; i < end; i++) {
+      const el = renderItem(list[i], i === 0 && shown === 0);
+      container.appendChild(el);
+      setTimeout(() => el.classList.add('visible'), (i - shown) * 60);
+    }
+    shown = end;
+    document.getElementById('loadMoreBtn').style.display = shown >= list.length ? 'none' : '';
+  }
+
+  function reset() {
+    shown = 0;
+    document.getElementById('essaysList').innerHTML = '';
+    renderMore();
+  }
+
+  reset();
+
+  // Filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      reset();
+    });
+  });
+
+  // Load more
+  document.getElementById('loadMoreBtn').addEventListener('click', renderMore);
+
+  // Search
+  document.getElementById('searchBtn').addEventListener('click', () => {
+    document.getElementById('searchOverlay').classList.add('active');
+    setTimeout(() => document.querySelector('.search-input').focus(), 50);
+  });
+  document.getElementById('searchClose').addEventListener('click', () => document.getElementById('searchOverlay').classList.remove('active'));
+
+  // Dark mode
+  const savedTheme = localStorage.getItem('rf-theme') || 'light';
+  if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  document.getElementById('darkToggle').addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('rf-theme', isDark ? 'light' : 'dark');
+  });
+
+  // Hamburger
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+  document.getElementById('mobileNavClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('searchOverlay').classList.remove('active');
+      document.getElementById('mobileNav').classList.remove('open');
+    }
+  });
+
+  // Fade in static
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 60); });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

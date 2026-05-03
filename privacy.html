@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プライバシーポリシー & 免責事項 — reframe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .site-main { max-width: 720px; margin: 0 auto; padding: 48px var(--page-pad) 96px; }
+
+    .breadcrumb { font-size: 11px; color: var(--fg-light); letter-spacing: 0.06em; margin-bottom: 20px; display: flex; gap: 6px; }
+    .breadcrumb a:hover { color: var(--fg); }
+
+    .page-title {
+      font-family: var(--serif);
+      font-size: 44px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .page-updated {
+      font-size: 11px;
+      color: var(--fg-light);
+      letter-spacing: 0.06em;
+      margin-bottom: 56px;
+    }
+
+    /* Section */
+    .policy-section { margin-bottom: 52px; }
+
+    .policy-section-num {
+      font-family: var(--serif);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--fg-light);
+      margin-bottom: 6px;
+    }
+
+    .policy-section-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--fg);
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.02em;
+    }
+
+    .policy-body {
+      font-size: 14px;
+      color: var(--fg-mid);
+      line-height: 2;
+    }
+
+    .policy-body p { margin-bottom: 1.2em; }
+    .policy-body p:last-child { margin-bottom: 0; }
+
+    .policy-body a {
+      color: var(--fg);
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .policy-body a:hover { border-color: var(--fg); }
+
+    /* Sub-list */
+    .policy-list {
+      list-style: none;
+      margin: 1em 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .policy-list li {
+      display: flex;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--fg-mid);
+      line-height: 1.8;
+    }
+
+    .policy-list li::before {
+      content: '—';
+      color: var(--fg-light);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* GA4 highlight box */
+    .ga-box {
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+
+    .ga-box-title {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-light);
+      margin-bottom: 10px;
+    }
+
+    .ga-box-body {
+      font-size: 13px;
+      color: var(--fg-mid);
+      line-height: 1.9;
+    }
+
+    /* Image citation table */
+    .citation-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 16px 0;
+    }
+
+    .citation-table th {
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-light);
+      padding: 8px 12px 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+    }
+
+    .citation-table td {
+      padding: 10px 12px 10px 0;
+      color: var(--fg-mid);
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    .citation-table tr:last-child td { border-bottom: none; }
+
+    /* Final note */
+    .policy-note {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-light);
+      font-size: 12px;
+      color: var(--fg-light);
+      line-height: 1.9;
+      letter-spacing: 0.02em;
+    }
+
+    @media (max-width: 640px) {
+      .page-title { font-size: 32px; }
+      .citation-table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+  <a href="index.html">ホーム</a>
+  <a href="essays.html">考察一覧</a>
+  <a href="statement.html">このサイトについて</a>
+  <a href="contact.html">お問い合わせ</a>
+</div>
+
+<header class="site-header">
+  <div class="header-top">映画・ドラマの考察メディア
+    <button class="dark-toggle" id="darkToggle" aria-label="ダークモード切替"></button>
+  </div>
+  <div class="header-main">
+    <a class="logo" href="index.html">
+      <span class="logo-text">reframe</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">ホーム</a>
+      <a href="essays.html">考察一覧</a>
+      <a href="statement.html">このサイトについて</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="site-main">
+
+  <nav class="breadcrumb fade-in">
+    <a href="index.html">reframe</a>
+    <span style="color:var(--border);">/</span>
+    <span style="color:var(--fg-mid);">プライバシーポリシー & 免責事項</span>
+  </nav>
+
+  <h1 class="page-title fade-in">プライバシーポリシー<br>&amp; 免責事項</h1>
+  <p class="page-updated fade-in">最終更新：2024年6月1日</p>
+
+  <!-- 1. 個人情報の取り扱い -->
+  <div class="policy-section fade-in">
+    <div class="policy-section-num">01</div>
+    <div class="policy-section-title">個人情報の取り扱い</div>
+    <div class="policy-body">
+      <p>reframe（以下「当サイト」）は、お問い合わせフォームを通じてお名前・メールアドレス等の個人情報をお預かりする場合があります。取得した個人情報は、以下の目的にのみ使用し、第三者への提供は行いません。</p>
+      <ul class="policy-list">
+        <li>お問い合わせへの返信</li>
+        <li>執筆依頼・業務委託に関する連絡</li>
+        <li>当サイトの運営改善に関する調査</li>
+      </ul>
+      <p>個人情報の開示・訂正・削除をご希望の場合は、<a href="contact.html">お問い合わせフォーム</a>よりご連絡ください。合理的な期間内に対応いたします。</p>
+    </div>
+  </div>
+
+  <!-- 2. アクセス解析（Google Analytics 4） -->
+  <div class="policy-section fade-in">
+    <div class="policy-section-num">02</div>
+    <div class="policy-section-title">アクセス解析ツールについて</div>
+    <div class="policy-body">
+      <p>当サイトでは、Googleが提供するアクセス解析ツール「Google Analytics 4（GA4）」を使用しています。GA4はCookieを使用してデータを収集しますが、個人を特定する情報は含まれません。</p>
+
+      <div class="ga-box">
+        <div class="ga-box-title">Google Analytics 4 の概要</div>
+        <div class="ga-box-body">
+          収集データ：閲覧ページ・滞在時間・流入元・デバイス情報など。<br>
+          データの管理者：Google LLC（米国）<br>
+          データの利用目的：当サイトの利用状況の把握・コンテンツ改善<br>
+          オプトアウト：<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google アナリティクス オプトアウト アドオン</a>からいつでも無効化できます。
+        </div>
+      </div>
+
+      <p>GA4の詳細については、<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Googleプライバシーポリシー</a>をご確認ください。なお、当サイトは広告目的でのデータ共有を行っていません。</p>
+    </div>
+  </div>
+
+  <!-- 3. 著作権・画像引用について -->
+  <div class="policy-section fade-in">
+    <div class="policy-section-num">03</div>
+    <div class="policy-section-title">著作権・画像引用について</div>
+    <div class="policy-body">
+      <p>当サイトに掲載されているテキストコンテンツ（考察文・編集構成）の著作権は、特に断りのない限り当サイト運営者に帰属します。無断転載・複製・改変はご遠慮ください。</p>
+
+      <p>映画・ドラマのスチール写真・ポスター画像については、以下のガイドラインに従い、報道・批評・教育を目的とした引用の範囲内で使用しています。</p>
+
+      <table class="citation-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>方針</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>使用目的</td>
+            <td>映画・ドラマの考察・批評に限定。商業目的での使用は行いません。</td>
+          </tr>
+          <tr>
+            <td>出典表記</td>
+            <td>各画像に作品名・配給会社・制作年を明記します。</td>
+          </tr>
+          <tr>
+            <td>使用範囲</td>
+            <td>原則として作品全体の内容を代替しない最小限の使用に留めます。</td>
+          </tr>
+          <tr>
+            <td>削除要請</td>
+            <td>権利者からの削除要請には速やかに対応いたします。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>画像の権利に関するお問い合わせは、<a href="contact.html">こちらのフォーム</a>よりご連絡ください。</p>
+    </div>
+  </div>
+
+  <!-- 4. 免責事項 -->
+  <div class="policy-section fade-in">
+    <div class="policy-section-num">04</div>
+    <div class="policy-section-title">免責事項</div>
+    <div class="policy-body">
+      <p>当サイトに掲載する考察・解説は、運営者個人の見解に基づくものです。作品の公式見解・制作意図を代表するものではありません。</p>
+      <ul class="policy-list">
+        <li>当サイトの情報を参照した結果生じたいかなる損害についても、運営者は責任を負いかねます。</li>
+        <li>外部リンク先のコンテンツについては、各リンク先の管理者が責任を負います。</li>
+        <li>掲載情報は予告なく変更・削除される場合があります。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5. ポリシーの改定 -->
+  <div class="policy-section fade-in">
+    <div class="policy-section-num">05</div>
+    <div class="policy-section-title">ポリシーの改定</div>
+    <div class="policy-body">
+      <p>本ポリシーは、法令の改正やサービス変更に伴い、予告なく改定される場合があります。改定後のポリシーは当ページに掲載した時点から効力を持つものとします。</p>
+    </div>
+  </div>
+
+  <div class="policy-note fade-in">
+    本ポリシーに関するご質問は <a href="contact.html">お問い合わせフォーム</a> よりご連絡ください。<br>
+    © 2024 reframe — 運営者：山崎 雄太
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a class="footer-logo" href="index.html">
+        <span class="logo-text-sm">reframe</span>
+      </a>
+      <nav class="footer-nav">
+        <a href="index.html">ホーム</a>
+        <a href="essays.html">考察一覧</a>
+        <a href="statement.html">このサイトについて</a>
+        <a href="contact.html">お問い合わせ</a>
+      </nav>
+      <div class="footer-social"><a href="#">X</a><a href="#">Instagram</a></div>
+    </div>
+    <div class="footer-bottom">© 2024 reframe &nbsp;|&nbsp; <a href="privacy.html" style="color:var(--fg-light);border-bottom:1px solid var(--border-light);">プライバシーポリシー</a></div>
+  </div>
+</footer>
+
+<script>
+  const savedTheme = localStorage.getItem('rf-theme') || 'light';
+  if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  document.getElementById('darkToggle').addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('rf-theme', isDark ? 'light' : 'dark');
+  });
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+  document.getElementById('mobileNavClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('mobileNav').classList.remove('open'); });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 70); });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

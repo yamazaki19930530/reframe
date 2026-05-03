@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>夢の中の階層が示す「無意識の構造」について — reframe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .site-main { max-width: 720px; margin: 0 auto; padding: 48px var(--page-pad) 80px; }
+
+    /* Breadcrumb */
+    .breadcrumb { font-size: 11px; color: var(--fg-light); letter-spacing: 0.06em; margin-bottom: 32px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--fg); }
+    .breadcrumb span { color: var(--border); }
+
+    /* Article header */
+    .article-header { margin-bottom: 40px; }
+    .article-category { font-size: 11px; letter-spacing: 0.1em; color: var(--fg-light); margin-bottom: 16px; }
+    .article-title {
+      font-family: var(--serif);
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 1.45;
+      letter-spacing: 0.01em;
+      margin-bottom: 24px;
+    }
+    .article-meta { display: flex; align-items: center; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--border-light); }
+    .article-date { font-size: 12px; color: var(--fg-light); letter-spacing: 0.04em; }
+    .article-tags { display: flex; gap: 8px; }
+    .article-tag { font-size: 10px; letter-spacing: 0.06em; color: var(--fg-light); border: 1px solid var(--border); padding: 2px 10px; }
+
+    /* Hero image */
+    .article-hero {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: repeating-linear-gradient(-45deg, #2a2826 0, #2a2826 1px, #1c1b19 1px, #1c1b19 8px);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: flex-end;
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] .article-hero {
+      background: repeating-linear-gradient(-45deg, #222 0, #222 1px, #111 1px, #111 8px);
+    }
+
+    .article-hero-caption { font-size: 9px; font-family: monospace; color: #666; letter-spacing: 0.05em; }
+
+    /* Article body */
+    .article-body { font-family: var(--serif); font-size: 18px; line-height: 2; color: var(--fg); }
+
+    .article-body p { margin-bottom: 1.6em; }
+
+    .article-body h2 {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      margin: 2.4em 0 0.8em;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-light);
+      letter-spacing: 0.02em;
+    }
+
+    .article-body h3 {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 500;
+      margin: 1.8em 0 0.6em;
+    }
+
+    .article-body blockquote {
+      border-left: 2px solid var(--border);
+      padding: 4px 0 4px 24px;
+      margin: 1.6em 0;
+      color: var(--fg-mid);
+      font-style: italic;
+    }
+
+    .article-body .pull-quote {
+      font-size: 22px;
+      font-style: italic;
+      color: var(--fg-mid);
+      text-align: center;
+      padding: 32px 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      margin: 2em 0;
+      line-height: 1.6;
+    }
+
+    /* In-article image */
+    .article-img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: repeating-linear-gradient(-45deg, var(--border) 0, var(--border) 1px, var(--border-light) 1px, var(--border-light) 7px);
+      margin: 2em 0 0.6em;
+      display: flex;
+      align-items: flex-end;
+      padding: 10px;
+    }
+
+    .article-img-caption { font-size: 11px; font-family: var(--sans); color: var(--fg-light); margin-bottom: 2em; letter-spacing: 0.04em; }
+
+    /* TOC */
+    .toc {
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      font-size: 13px;
+    }
+
+    .toc-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-light); margin-bottom: 12px; }
+
+    .toc ol { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+
+    .toc li a { color: var(--fg-mid); transition: color 0.2s; }
+    .toc li a:hover { color: var(--fg); }
+
+    /* Author block */
+    .author-section {
+      margin-top: 56px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .author-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .author-block:hover { opacity: 0.75; }
+
+    .author-avatar {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      background: repeating-linear-gradient(-45deg, #2a2826 0, #2a2826 1px, #1c1b19 1px, #1c1b19 6px);
+    }
+
+    [data-theme="dark"] .author-avatar {
+      background: repeating-linear-gradient(-45deg, #333 0, #333 1px, #222 1px, #222 6px);
+    }
+
+    .author-info { flex: 1; }
+
+    .author-label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fg-light);
+      margin-bottom: 5px;
+    }
+
+    .author-name {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--fg);
+      margin-bottom: 2px;
+      letter-spacing: 0.02em;
+    }
+
+    .author-role {
+      font-size: 12px;
+      color: var(--fg-light);
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+
+    .author-bio {
+      font-size: 12.5px;
+      color: var(--fg-mid);
+      line-height: 1.9;
+      margin-bottom: 12px;
+    }
+
+    .author-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--fg-light);
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .author-block:hover .author-link { color: var(--fg); border-color: var(--border); }
+
+    /* Related */
+    .related-section { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border); }
+
+    .related-label { font-size: 12px; letter-spacing: 0.1em; color: var(--fg-light); margin-bottom: 20px; }
+
+    .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-left: 1px solid var(--border); border-top: 1px solid var(--border); }
+
+    .related-card {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.18s;
+    }
+
+    .related-card:hover { background: color-mix(in srgb, var(--bg) 80%, var(--fg) 4%); }
+
+    .related-card-img {
+      aspect-ratio: 16/9;
+      background: repeating-linear-gradient(-45deg, var(--border) 0, var(--border) 1px, var(--border-light) 1px, var(--border-light) 6px);
+    }
+
+    .related-card-body { padding: 16px; }
+
+    .related-card-cat { font-size: 10px; color: var(--fg-light); letter-spacing: 0.08em; margin-bottom: 6px; }
+
+    .related-card-title { font-family: var(--serif); font-size: 15px; font-weight: 500; line-height: 1.55; color: var(--fg); }
+
+    /* Reading progress bar */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: var(--fg);
+      width: 0%;
+      z-index: 999;
+      transition: width 0.1s linear;
+    }
+
+    /* Share bar */
+    .share-bar {
+      position: fixed;
+      left: calc(50% + 380px);
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .share-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--fg-mid);
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .share-btn:hover { border-color: var(--fg); color: var(--fg); }
+
+    @media (max-width: 1100px) { .share-bar { display: none; } }
+
+    @media (max-width: 640px) {
+      .article-title { font-size: 26px; }
+      .article-body { font-size: 16px; }
+      .related-grid { grid-template-columns: 1fr; }
+      .toc { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+  <a href="index.html">ホーム</a>
+  <a href="essays.html">考察一覧</a>
+  <a href="statement.html">このサイトについて</a>
+  <a href="contact.html">お問い合わせ</a>
+</div>
+
+<!-- Search overlay -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-form">
+    <button class="search-close" id="searchClose">✕</button>
+    <input class="search-input" type="text" placeholder="キーワードで検索..." />
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-top">映画・ドラマの考察メディア
+    <button class="dark-toggle" id="darkToggle" aria-label="ダークモード切替"></button>
+  </div>
+  <div class="header-main">
+    <a class="logo" href="index.html">
+      <span class="logo-text">reframe</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">ホーム</a>
+      <a href="essays.html" class="active">考察一覧</a>
+      <a href="statement.html">このサイトについて</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="nav-search" id="searchBtn" aria-label="検索">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Share bar -->
+<div class="share-bar">
+  <button class="share-btn" title="Xでシェア">X</button>
+  <button class="share-btn" id="copyLinkBtn" title="リンクをコピー">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+  </button>
+</div>
+
+<main class="site-main">
+
+  <nav class="breadcrumb fade-in">
+    <a href="index.html">reframe</a>
+    <span>/</span>
+    <a href="essays.html">考察一覧</a>
+    <span>/</span>
+    <span style="color:var(--fg-mid);">インセプション</span>
+  </nav>
+
+  <header class="article-header fade-in">
+    <div class="article-category">映画「インセプション」</div>
+    <h1 class="article-title">夢の中の階層が示す<br>「無意識の構造」について</h1>
+    <div class="article-meta">
+      <span class="article-date">2024.06.01</span>
+      <div class="article-tags">
+        <span class="article-tag">夢</span>
+        <span class="article-tag">無意識</span>
+        <span class="article-tag">ノーラン</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="article-hero fade-in">
+    <span class="article-hero-caption">映画スチール写真 — インセプション（2010）</span>
+  </div>
+
+  <div class="toc fade-in">
+    <div class="toc-title">目次</div>
+    <ol>
+      <li><a href="#section1">夢の階層とフロイト理論</a></li>
+      <li><a href="#section2">建築的モチーフが示すもの</a></li>
+      <li><a href="#section3">リンボという「無意識の非時間性」</a></li>
+      <li><a href="#section4">まとめ：映画が問うもの</a></li>
+    </ol>
+  </div>
+
+  <article class="article-body fade-in">
+
+    <p>
+      クリストファー・ノーランの「インセプション」において、夢の階層構造はフロイト的な無意識のモデルと驚くほど整合的に対応しています。単なるSF的な設定ではなく、人間の無意識の構造そのものを映し出す装置として機能しているのです。
+    </p>
+
+    <h2 id="section1">夢の階層とフロイト理論</h2>
+
+    <p>
+      フロイトは無意識を、意識の表層に隠れた深層として描きました。夢はその深層へのアクセス経路であり、抑圧された欲望や記憶が象徴的な形で現れる場です。「インセプション」における夢の第一層は、日常意識に近い表層を模倣します。登場人物たちは「夢を見ている」とは気づかず、現実と地続きの感覚の中で行動します。
+    </p>
+
+    <div class="pull-quote">
+      「夢は何重にも折り畳まれた意識の地図であり、<br>深く潜るほど、自己の核心に近づく。」
+    </div>
+
+    <p>
+      しかし深層に降りるにつれて、現実の物理法則は崩れ始めます。建物は折り曲がり、重力は反転し、時間の流れは歪む。これはフロイトが描いた「一次過程」——論理や時間、矛盾を無視して働く無意識の思考形式——の視覚的表現といえます。
+    </p>
+
+    <h2 id="section2">建築的モチーフが示すもの</h2>
+
+    <div class="article-img">
+      <span style="font-size:9px;font-family:monospace;color:#888;">夢の中の建築 — 折り曲がる都市のシーン</span>
+    </div>
+    <div class="article-img-caption">© Warner Bros. Pictures / 建築家アリアドネが設計する夢の空間</div>
+
+    <p>
+      本作において建築家アリアドネが担う役割は象徴的です。彼女は夢の空間を「設計」することで、他者の無意識に侵入するための経路を作り出します。ここに「建築＝意識の構造」というメタファーを読み取ることができます。
+    </p>
+
+    <p>
+      アリアドネという名前がギリシャ神話の迷宮を抜け出す糸を与えた人物であることも、偶然ではありません。迷宮としての無意識、そしてそこを抜け出すための「構造的な理解」が、本作のテーマの核心に据えられています。
+    </p>
+
+    <h2 id="section3">リンボという「無意識の非時間性」</h2>
+
+    <p>
+      フロイトは無意識の重要な特性として「非時間性」を挙げました。無意識においては過去・現在・未来の区別がなく、抑圧された記憶は時間を超えて現前し続けます。「インセプション」のリンボは、まさにこの特性を体現しています。
+    </p>
+
+    <blockquote>
+      「リンボは夢の最深部であり、そこでは時間の概念が消滅する。数分間の夢が、数十年の主観的時間に相当する。」
+    </blockquote>
+
+    <p>
+      コブが妻モルの記憶に囚われ続けるのは、彼の無意識がその喪失を「現在進行形」として処理し続けているからです。リンボはその強制力の具象化であり、コブがインセプションを必要とする真の理由でもあります。
+    </p>
+
+    <h2 id="section4">まとめ：映画が問うもの</h2>
+
+    <p>
+      「インセプション」が最終的に問うのは、「現実とは何か」という問いです。しかしそれはSF的な問いではなく、無意識の内部で現実を構築し続けている私たち自身への問いです。コマが回り続けるラストシーンは、その問いに対する答えを、意図的に宙吊りにしたままエンドロールを迎えます。
+    </p>
+
+    <p>
+      物語の構造を読み解くことは、自分自身の思考の構造を問い直すことでもある——本作はそのことを、夢という最も親密な体験を通じて、静かに示しているのかもしれません。
+    </p>
+
+  </article>
+
+  <!-- Author -->
+  <section class="author-section fade-in">
+    <a class="author-block" href="statement.html">
+      <div class="author-avatar"></div>
+      <div class="author-info">
+        <div class="author-label">Written by</div>
+        <div class="author-name">山崎 雄太</div>
+        <div class="author-role">脚本家志望 / Webライター</div>
+        <p class="author-bio">脚本術と物語構造の研究を軸に、映画・ドラマの考察記事を執筆。脚本家としての活動も並行し、Webライターとしてコンテンツ制作に携わる。</p>
+        <span class="author-link">プロフィールを見る →</span>
+      </div>
+    </a>
+  </section>
+
+  <!-- Related -->
+  <section class="related-section fade-in">
+    <div class="related-label">関連記事</div>
+    <div class="related-grid">
+      <a class="related-card" href="article.html">
+        <div class="related-card-img"></div>
+        <div class="related-card-body">
+          <div class="related-card-cat">映画「アメリ」</div>
+          <div class="related-card-title">「小さな幸せ」の編集がつくる物語の余白</div>
+        </div>
+      </a>
+      <a class="related-card" href="article.html">
+        <div class="related-card-img"></div>
+        <div class="related-card-body">
+          <div class="related-card-cat">映画「ショーシャンクの空に」</div>
+          <div class="related-card-title">希望は「制度の外側」にあるのか</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a class="footer-logo" href="index.html">
+        <span class="logo-text-sm">reframe</span>
+      </a>
+      <nav class="footer-nav">
+        <a href="index.html">ホーム</a>
+        <a href="essays.html">考察一覧</a>
+        <a href="statement.html">このサイトについて</a>
+        <a href="contact.html">お問い合わせ</a>
+      </nav>
+      <div class="footer-social"><a href="#">X</a><a href="#">Instagram</a></div>
+    </div>
+    <div class="footer-bottom">© 2024 reframe &nbsp;|&nbsp; <a href="privacy.html" style="color:var(--fg-light);border-bottom:1px solid var(--border-light);">プライバシーポリシー</a></div>
+  </div>
+</footer>
+
+<script>
+  // Reading progress
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop;
+    const total = doc.scrollHeight - doc.clientHeight;
+    document.getElementById('progressBar').style.width = (scrolled / total * 100) + '%';
+  });
+
+  // Dark mode
+  const savedTheme = localStorage.getItem('rf-theme') || 'light';
+  if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  document.getElementById('darkToggle').addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('rf-theme', isDark ? 'light' : 'dark');
+  });
+
+  // Search
+  document.getElementById('searchBtn').addEventListener('click', () => {
+    document.getElementById('searchOverlay').classList.add('active');
+    setTimeout(() => document.querySelector('.search-input').focus(), 50);
+  });
+  document.getElementById('searchClose').addEventListener('click', () => document.getElementById('searchOverlay').classList.remove('active'));
+
+  // Hamburger
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+  document.getElementById('mobileNavClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+
+  // Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('searchOverlay').classList.remove('active');
+      document.getElementById('mobileNav').classList.remove('open');
+    }
+  });
+
+  // Copy link
+  document.getElementById('copyLinkBtn').addEventListener('click', () => {
+    navigator.clipboard.writeText(location.href).then(() => {
+      const btn = document.getElementById('copyLinkBtn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓';
+      setTimeout(() => { btn.innerHTML = orig; }, 1500);
+    });
+  });
+
+  // Fade in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 60); });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

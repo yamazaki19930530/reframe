@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — reframe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    html, body { height: 100%; }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .site-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 48px var(--page-pad) 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle dot-grid background */
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 1;
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .scanlines { display: none; }
+
+    /* Content */
+    .error-content {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+    }
+
+    /* Status badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      padding: 5px 14px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--fg-light);
+      margin-bottom: 32px;
+      background: var(--bg);
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--fg-light);
+      animation: blink 1.4s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    .error-num {
+      font-family: var(--serif);
+      font-size: clamp(80px, 15vw, 140px);
+      font-weight: 400;
+      line-height: 1;
+      color: var(--fg);
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+      position: relative;
+      display: inline-block;
+      -webkit-text-stroke: 1px var(--border);
+    }
+
+    /* Main message */
+    .error-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--fg-light);
+      margin-bottom: 20px;
+    }
+
+    .error-title {
+      font-family: var(--serif);
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--fg);
+      margin-bottom: 16px;
+      letter-spacing: 0.01em;
+    }
+
+    .error-subtitle {
+      font-size: 13px;
+      color: var(--fg-mid);
+      line-height: 1.9;
+      margin-bottom: 48px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Film strip metaphor */
+    .filmstrip {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 48px;
+      justify-content: center;
+    }
+
+    .frame {
+      width: 56px;
+      height: 40px;
+      border: 1.5px solid var(--border);
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--border-light) 0, var(--border-light) 1px,
+        transparent 1px, transparent 6px
+      );
+      position: relative;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+
+    .frame::before,
+    .frame::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 3px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+
+    .frame::before { top: -1px; left: 3px; }
+    .frame::after  { bottom: -1px; left: 3px; }
+
+    .frame.broken {
+      border-color: transparent;
+      background: none;
+      position: relative;
+    }
+
+    .frame.broken::before,
+    .frame.broken::after { display: none; }
+
+    .frame-missing {
+      width: 56px;
+      height: 40px;
+      border: 1.5px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: monospace;
+      font-size: 10px;
+      color: var(--fg-light);
+    }
+
+    /* CTA buttons */
+    .error-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--fg);
+      color: var(--bg);
+      border: none;
+      padding: 14px 32px;
+      font-family: var(--serif);
+      font-size: 16px;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.75; }
+
+    .btn-secondary {
+      font-size: 13px;
+      color: var(--fg-mid);
+      letter-spacing: 0.06em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover { color: var(--fg); }
+
+    /* Latest articles carousel */
+    .latest-section {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 820px;
+      margin: 56px auto 0;
+      text-align: left;
+    }
+
+    .latest-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--fg-light);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .latest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-left: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+    }
+
+    .latest-card {
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      transition: background 0.18s;
+      background: var(--bg);
+    }
+
+    .latest-card:hover {
+      background: color-mix(in srgb, var(--bg) 80%, var(--fg) 4%);
+    }
+
+    .latest-card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--border) 0, var(--border) 1px,
+        var(--border-light) 1px, var(--border-light) 6px
+      );
+      margin-bottom: 12px;
+    }
+
+    .latest-card-cat {
+      font-size: 10px;
+      color: var(--fg-light);
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .latest-card-title {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.55;
+      color: var(--fg);
+    }
+
+    @media (max-width: 640px) {
+      .latest-grid { grid-template-columns: 1fr; }
+      .error-actions { flex-direction: column; }
+      .filmstrip { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="scanlines"></div>
+
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+  <a href="index.html">ホーム</a>
+  <a href="essays.html">考察一覧</a>
+  <a href="statement.html">このサイトについて</a>
+  <a href="contact.html">お問い合わせ</a>
+</div>
+
+<header class="site-header">
+  <div class="header-top">映画・ドラマの考察メディア
+    <button class="dark-toggle" id="darkToggle" aria-label="ダークモード切替"></button>
+  </div>
+  <div class="header-main">
+    <a class="logo" href="index.html">
+      <span class="logo-text">reframe</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">ホーム</a>
+      <a href="essays.html">考察一覧</a>
+      <a href="statement.html">このサイトについて</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="site-main">
+
+  <div class="error-content">
+
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      REFRAME ERROR
+    </div>
+
+    <div class="error-num">404</div>
+
+    <div class="error-label">視点の再構築に失敗しました</div>
+
+    <h1 class="error-title">
+      このページは、<br>
+      まだフレームの外にあります。
+    </h1>
+
+    <p class="error-subtitle">
+      URLが変更されたか、ページが存在しない可能性があります。<br>
+      物語の構造を読み解くには、正しい入口から入る必要があります。
+    </p>
+
+    <!-- Film strip -->
+    <div class="filmstrip" aria-hidden="true">
+      <div class="frame"></div>
+      <div class="frame"></div>
+      <div class="frame"></div>
+      <div class="frame-missing">?</div>
+      <div class="frame broken"></div>
+      <div class="frame" style="opacity:0.3;"></div>
+      <div class="frame" style="opacity:0.1;"></div>
+    </div>
+
+    <div class="error-actions">
+      <a class="btn-primary" href="index.html">
+        ホームに戻る →
+      </a>
+      <a class="btn-secondary" href="essays.html">
+        考察一覧を見る
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Latest articles -->
+  <div class="latest-section">
+    <div class="latest-label">最新の考察 — 視点を切り替えてみてください</div>
+    <div class="latest-grid">
+      <a class="latest-card" href="article.html">
+        <div class="latest-card-img"></div>
+        <div class="latest-card-cat">映画「インセプション」</div>
+        <div class="latest-card-title">夢の中の階層が示す「無意識の構造」について</div>
+      </a>
+      <a class="latest-card" href="article.html">
+        <div class="latest-card-img"></div>
+        <div class="latest-card-cat">映画「アメリ」</div>
+        <div class="latest-card-title">「小さな幸せ」の編集がつくる物語の余白</div>
+      </a>
+      <a class="latest-card" href="article.html">
+        <div class="latest-card-img"></div>
+        <div class="latest-card-cat">映画「千と千尋の神隠し」</div>
+        <div class="latest-card-title">名前を奪われることの象徴性</div>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a class="footer-logo" href="index.html">
+        <span class="logo-text-sm">reframe</span>
+      </a>
+      <nav class="footer-nav">
+        <a href="index.html">ホーム</a>
+        <a href="essays.html">考察一覧</a>
+        <a href="statement.html">このサイトについて</a>
+        <a href="contact.html">お問い合わせ</a>
+      </nav>
+      <div class="footer-social"><a href="#">X</a><a href="#">Instagram</a></div>
+    </div>
+    <div class="footer-bottom">© 2024 reframe &nbsp;|&nbsp; <a href="privacy.html" style="color:var(--fg-light);border-bottom:1px solid var(--border-light);">プライバシーポリシー</a></div>
+  </div>
+</footer>
+
+<script>
+  const savedTheme = localStorage.getItem('rf-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('darkToggle').addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('rf-theme', isDark ? 'light' : 'dark');
+  });
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+  document.getElementById('mobileNavClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('mobileNav').classList.remove('open'); });
+</script>
+</body>
+</html>
