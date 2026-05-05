@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>『タツキ先生は甘すぎる！』が描く"期待"の呪縛 — reframe magazine</title>
+  <meta name="description" content="第4話の親子描写と町田啓太の演技対比から、"甘さ"の正体を読み解く。" />
+  <!-- OGP -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="reframe magazine" />
+  <meta property="og:title" content="『タツキ先生は甘すぎる！』が描く"期待"の呪縛" />
+  <meta property="og:description" content="第4話の親子描写と町田啓太の演技対比から、"甘さ"の正体を読み解く。" />
+  <meta property="og:url" content="https://reframemagazine.jp/tatsuki-sensei.html" />
+  <meta property="og:image" content="https://reframemagazine.jp/uploads/tatsuki-sensei-eyecatch.png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="720" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="『タツキ先生は甘すぎる！』が描く"期待"の呪縛" />
+  <meta name="twitter:description" content="第4話の親子描写と町田啓太の演技対比から、"甘さ"の正体を読み解く。" />
+  <meta name="twitter:image" content="https://reframemagazine.jp/uploads/tatsuki-sensei-eyecatch.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .site-main { max-width: 720px; margin: 0 auto; padding: 48px var(--page-pad) 80px; }
+
+    .breadcrumb { font-size: 11px; color: var(--fg-light); letter-spacing: 0.06em; margin-bottom: 32px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--fg); }
+    .breadcrumb span { color: var(--border); }
+
+    .article-header { margin-bottom: 40px; }
+    .article-category { font-size: 11px; letter-spacing: 0.1em; color: var(--fg-light); margin-bottom: 16px; }
+    .article-title {
+      font-family: var(--serif);
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 1.45;
+      letter-spacing: 0.01em;
+      margin-bottom: 24px;
+    }
+    .article-meta { display: flex; align-items: center; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--border-light); }
+    .article-date { font-size: 12px; color: var(--fg-light); letter-spacing: 0.04em; }
+    .article-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .article-tag { font-size: 10px; letter-spacing: 0.06em; color: var(--fg-light); border: 1px solid var(--border); padding: 2px 10px; }
+
+    .article-hero {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: url('uploads/tatsuki-sensei-eyecatch.png') center/cover no-repeat #1c1b19;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: flex-end;
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .article-hero-caption { font-size: 9px; font-family: monospace; color: #666; letter-spacing: 0.05em; }
+
+    .article-body { font-family: var(--serif); font-size: 18px; line-height: 2; color: var(--fg); }
+    .article-body p { margin-bottom: 1.6em; }
+    .article-body h2 {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 600;
+      margin: 2.8em 0 0.9em;
+      padding: 0 0 12px 16px;
+      border-left: 3px solid var(--fg);
+      border-bottom: 1px solid var(--border-light);
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+    }
+    .article-body blockquote {
+      border-left: 2px solid var(--border);
+      padding: 4px 0 4px 24px;
+      margin: 1.6em 0;
+      color: var(--fg-mid);
+      font-style: italic;
+    }
+    .article-body .pull-quote {
+      font-size: 22px;
+      font-style: italic;
+      color: var(--fg-mid);
+      text-align: center;
+      padding: 32px 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      margin: 2em 0;
+      line-height: 1.6;
+    }
+
+    .toc {
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      font-size: 13px;
+    }
+    .toc-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-light); margin-bottom: 12px; }
+    .toc ol { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .toc li a { color: var(--fg-mid); transition: color 0.2s; }
+    .toc li a:hover { color: var(--fg); }
+
+    .author-section {
+      margin-top: 56px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .author-block { display: flex; align-items: flex-start; gap: 20px; text-decoration: none; transition: opacity 0.2s; }
+    .author-block:hover { opacity: 0.75; }
+    .author-avatar {
+      width: 56px; height: 56px; flex-shrink: 0;
+      overflow: hidden; background: #1c1b19;
+    }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .author-info { flex: 1; }
+    .author-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-light); margin-bottom: 5px; }
+    .author-name { font-family: var(--serif); font-size: 19px; font-weight: 500; color: var(--fg); margin-bottom: 2px; letter-spacing: 0.02em; }
+    .author-role { font-size: 12px; color: var(--fg-light); letter-spacing: 0.04em; margin-bottom: 10px; }
+    .author-bio { font-size: 12.5px; color: var(--fg-mid); line-height: 1.9; margin-bottom: 12px; }
+    .author-link { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--fg-light); letter-spacing: 0.06em; border-bottom: 1px solid var(--border-light); padding-bottom: 1px; transition: color 0.2s, border-color 0.2s; }
+    .author-block:hover .author-link { color: var(--fg); border-color: var(--border); }
+
+    .related-section { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .related-label { font-size: 12px; letter-spacing: 0.1em; color: var(--fg-light); margin-bottom: 20px; }
+    .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-left: 1px solid var(--border); border-top: 1px solid var(--border); }
+    .related-card { display: flex; flex-direction: column; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); cursor: pointer; text-decoration: none; transition: background 0.18s; }
+    .related-card:hover { background: color-mix(in srgb, var(--bg) 80%, var(--fg) 4%); }
+    .related-card-img { aspect-ratio: 16/9; background: repeating-linear-gradient(-45deg, var(--border) 0, var(--border) 1px, var(--border-light) 1px, var(--border-light) 6px); }
+    .related-card-body { padding: 16px; }
+    .related-card-cat { font-size: 10px; color: var(--fg-light); letter-spacing: 0.08em; margin-bottom: 6px; }
+    .related-card-title { font-family: var(--serif); font-size: 15px; font-weight: 500; line-height: 1.55; color: var(--fg); }
+
+    .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--fg); width: 0%; z-index: 999; transition: width 0.1s linear; }
+
+    .share-bar {
+      position: fixed;
+      left: calc(50% + 380px);
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+    }
+    .share-btn {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--fg-mid);
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .share-btn:hover { border-color: var(--fg); color: var(--fg); }
+
+    @media (max-width: 1100px) { .share-bar { display: none; } }
+    @media (max-width: 640px) {
+      .article-title { font-size: 26px; }
+      .article-body { font-size: 16px; }
+      .related-grid { grid-template-columns: 1fr; }
+      .toc { display: none; }
+    }
+
+    /* ─── SHARE SECTION ─── */
+    .share-section { margin: 48px 0 0; padding: 24px 0; border-top: 1px solid var(--border-light); }
+    .share-section-label { font-size: 11px; letter-spacing: 0.1em; color: var(--fg-light); margin-bottom: 16px; }
+    .share-section-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .share-section-btn {
+      border: 1px solid var(--border);
+      padding: 8px 20px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--fg-mid);
+      background: none;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      font-family: var(--sans);
+    }
+    .share-section-btn:hover { border-color: var(--fg); color: var(--fg); }
+    .share-section-btn.copied { border-color: var(--fg); color: var(--fg); }
+
+    /* ─── INSTAGRAM EMBED ─── */
+    .ig-embed-wrap {
+      margin: 2.4em auto;
+      max-width: 100%;
+    }
+    .ig-embed-wrap .instagram-media {
+      margin: 0 auto !important;
+      min-width: unset !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+  </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2VWWQDWPM5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2VWWQDWPM5');
+</script>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+  <a href="index.html">ホーム</a>
+  <a href="essays.html">考察一覧</a>
+  <a href="statement.html">reframe magazineとは</a>
+  <a href="contact.html">お問い合わせ</a>
+</div>
+
+<!-- Search overlay -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-form">
+    <button class="search-close" id="searchClose">✕</button>
+    <input class="search-input" type="text" placeholder="キーワードで検索..." />
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-top">映画・ドラマの考察メディア
+    <button class="dark-toggle" id="darkToggle" aria-label="ダークモード切替"></button>
+  </div>
+  <div class="header-main">
+    <a class="logo" href="index.html">
+      <span class="logo-text">reframe magazine</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">ホーム</a>
+      <a href="essays.html" class="active">考察一覧</a>
+      <a href="statement.html">reframe magazineとは</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="nav-search" id="searchBtn" aria-label="検索">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Share bar -->
+<div class="share-bar">
+  <a class="share-btn" id="shareXBtn" target="_blank" rel="noopener" title="Xでシェア">X</a>
+  <button class="share-btn" id="copyLinkBtn" title="リンクをコピー">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+  </button>
+</div>
+
+<main class="site-main">
+
+  <nav class="breadcrumb fade-in">
+    <a href="index.html">reframe</a>
+    <span>/</span>
+    <a href="essays.html">考察一覧</a>
+    <span>/</span>
+    <span style="color:var(--fg-mid);">タツキ先生は甘すぎる！</span>
+  </nav>
+
+  <header class="article-header fade-in">
+    <div class="article-category">ドラマ「タツキ先生は甘すぎる！」</div>
+    <h1 class="article-title">『タツキ先生は甘すぎる！』が描く"期待"の呪縛<br>——町田啓太の演技から読み解く「甘さ」の真意</h1>
+    <div class="article-meta">
+      <span class="article-date">2026.05.04</span>
+      <div class="article-tags">
+        <span class="article-tag">タツキ先生は甘すぎる！</span>
+        <span class="article-tag">町田啓太</span>
+        <span class="article-tag">徳尾浩司</span>
+        <span class="article-tag">日本テレビ</span>
+        <span class="article-tag">フリースクール</span>
+        <span class="article-tag">不登校</span>
+        <span class="article-tag">親子</span>
+        <span class="article-tag">演技</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="article-hero fade-in">
+    <span class="article-hero-caption">日本テレビ系土曜ドラマ「タツキ先生は甘すぎる！」</span>
+  </div>
+
+  <div class="toc fade-in">
+    <div class="toc-title">目次</div>
+    <ol>
+      <li><a href="#section1">なぜ「普通の親子」がすれ違うのか</a></li>
+      <li><a href="#section2">町田啓太が演じた"過去のタツキ"の意味</a></li>
+      <li><a href="#section3">"甘さ"はなぜ、救いとして機能するのか</a></li>
+      <li><a href="#section4">このドラマが、かつて子どもだった私たちに触れてくる理由</a></li>
+    </ol>
+  </div>
+
+  <article class="article-body fade-in">
+
+    <p>「あなたのためを思って言っている」——その言葉に、励まされた記憶よりも、傷ついた記憶のほうが先に浮かぶ人は少なくないはずだ。</p>
+
+    <p>日本テレビ系土曜ドラマ『タツキ先生は甘すぎる！』は、不登校の子どもたちが集まるフリースクールを舞台に、町田啓太演じる教師・タツキの"型破りな優しさ"を描く作品だ。第4話では、その優しさの原点ともいえる過去が明かされる。放送後、SNSには「リアルすぎて苦しい」「自分の家庭を見ているようだった」という声が相次いだ。</p>
+
+    <p>そこにいたのは、いわゆる"毒親"ではない。子どもを愛し、その将来を案じる、どこにでもいる「正しい親」だったからだ。</p>
+
+    <p>"甘すぎる"と批判されるタツキの優しさは、天性のものではない。かつて正しさで誰かを傷つけた人間だけが辿り着ける、ひとつの在り方なのかもしれない。</p>
+
+    <!-- ▼ INSTAGRAM EMBED 1 ▼ -->
+    <div class="ig-embed-wrap">
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/p/DXh6lTfE-Ua/"
+        data-instgrm-version="14">
+      </blockquote>
+    </div>
+    <!-- ▲ INSTAGRAM EMBED 1 ▲ -->
+
+    <h2 id="section1">なぜ「普通の親子」がすれ違うのか——"正しさ"が逃げ場を奪うとき</h2>
+
+    <p>第4話に登場するのは、フリースクールに通う中学生の女の子と、その母親だ。</p>
+
+    <p>母親に悪意はない。娘の将来を心配し、「このままでいいの？」「みんな頑張っているんだから」と繰り返す。言っていることは正しい。声を荒げるわけでもない。ただ、毎日、毎食、食卓で、同じ言葉が降ってくる。</p>
+
+    <p>「勉強しないと将来困る」。正論だ。「学校に戻れるよう、一緒に考えよう」。親心だ。だが、その正しさはときに、逃げ場を奪う。</p>
+
+    <p>親の言葉に対し、娘は反論しない。いや、できない。ただ唇を噛み、視線を落とし、言葉を飲み込むだけだ。親の言葉が間違っていないからこそ、否定することすら許されない——そんな閉塞が、画面越しに伝わってくる。</p>
+
+    <p>演出はあえて怒号や涙の爆発に頼らない。カメラが捉えるのは、返事をしないまま固まる背中と、埋まらない食卓の沈黙、噛み合わないまま宙に落ちていく言葉の数々。その静けさが、多くの家庭に潜む息苦しさを映し出してしまった。</p>
+
+    <h2 id="section2">町田啓太が演じた"過去のタツキ"の意味</h2>
+
+    <p>同じ第4話、回想シーンでタツキ自身の過去が明かされる。フリースクールで子どもたちに見せる柔和な表情を封印し、町田啓太は「正しさ」を信じて疑わない父親を硬質に演じてみせた。</p>
+
+    <p>現在のタツキと、過去のタツキ。その対比に、本作の核心がある。</p>
+
+    <p>回想の中の彼は、相手が言い淀む間を待たず、食い気味に言葉を重ねる。椅子に深く腰掛けることなく前のめりになり、相手の目を真っ直ぐ射抜きながら「正解」を突きつける。その姿には、理解よりも矯正を優先する人間の焦りがにじむ。現在パートの彼の姿を知っている視聴者には、同一人物とは思えない圧がある。</p>
+
+    <p>一方、現在の彼は違う。返答を急かさず、沈黙が訪れても埋めようとしない。子どもが視線を逸らせば、彼もまた無理に追わない。相手が言葉を見つけるまで、ただ静かに待つ。</p>
+
+    <p>この変化は、彼が「甘い教師」に丸くなったわけではないことを示している。一度、自らの正しさで大切なものを壊してしまった。その後悔を知っているからこそ、彼はあえて「正論を言わない」という、より困難な誠実さを選んでいるのだ。</p>
+
+    <!-- ▼ INSTAGRAM EMBED 2 ▼ -->
+    <div class="ig-embed-wrap">
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/p/DXz3RClkU8d/"
+        data-instgrm-version="14">
+      </blockquote>
+    </div>
+    <!-- ▲ INSTAGRAM EMBED 2 ▲ -->
+
+    <h2 id="section3">"甘さ"はなぜ、救いとして機能するのか</h2>
+
+    <p>タツキの「甘さ」の本質は、甘やかしでも放置でもない。</p>
+
+    <p>それは、問題を"解決する"ことを急がない態度だ。</p>
+
+    <p>タツキは無理に学校へ戻す方法を説かない。未来の話で急かすことも、励ましで鼓舞することもない。ただ、「今日はここに来られただけで十分だ」とでも言うように、その場にいるという事実そのものを受け止める。</p>
+
+    <p>「解決できないままでも、そこにいていい」——そのメッセージこそが、彼の"甘さ"の正体なのだろう。</p>
+
+    <p>毎日どこかで、前に進むことを求められている。頑張れない日、立ち止まってしまう日は、それだけで後ろめたくなる。そんなときにタツキが差し出すのは、解決策でも激励でもなく、「停滞してもいい場所」だ。それが視聴者にとって、切実な救いとして映る理由だと思う。</p>
+
+    <h2 id="section4">このドラマが、かつて子どもだった私たちに触れてくる理由</h2>
+
+    <p>「変わるまで待ってくれる物語」は、これまでもあった。</p>
+
+    <p>『タツキ先生は甘すぎる！』が違うのは、「変われない時間ごと引き受けてくれる物語」であることだ。問題が解決する瞬間より、解決しないまま誰かと一緒にいる時間に、丁寧に尺を割く。その姿勢が、今この瞬間に立ち止まっている人の胸に届く。</p>
+
+    <p>もし"甘い"という批判にタツキが答えるなら、こう言うのではないか。</p>
+
+    <div class="pull-quote">「今はまだ、それでいい」</div>
+
+    <p>それは今を生きる親子だけでなく、かつて子どもだった私たち自身の記憶にも、静かに触れてくる。</p>
+
+  </article>
+
+  <!-- Share -->
+  <div class="share-section fade-in">
+    <div class="share-section-label">この記事をシェア</div>
+    <div class="share-section-btns">
+      <a class="share-section-btn" id="shareBottomX" target="_blank" rel="noopener">X (Twitter)</a>
+      <a class="share-section-btn" id="shareBottomLine" target="_blank" rel="noopener">LINE</a>
+      <a class="share-section-btn" id="shareBottomFb" target="_blank" rel="noopener">Facebook</a>
+      <button class="share-section-btn" id="shareBottomCopy">リンクをコピー</button>
+    </div>
+  </div>
+
+  <!-- Author -->
+  <section class="author-section fade-in">
+    <a class="author-block" href="statement.html">
+      <div class="author-avatar"><img src="uploads/profile.png" alt="山崎裕太"></div>
+      <div class="author-info">
+        <div class="author-label">Written by</div>
+        <div class="author-name">山崎 裕太</div>
+        <div class="author-role">脚本家志望 / Webライター</div>
+        <p class="author-bio">脚本術と物語構造の研究を軸に、映画・ドラマの考察記事を執筆。脚本家としての活動も並行し、Webライターとしてコンテンツ制作に携わる。</p>
+        <span class="author-link">プロフィールを見る →</span>
+      </div>
+    </a>
+  </section>
+
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a class="footer-logo" href="index.html">
+        <span class="logo-text-sm">reframe magazine</span>
+      </a>
+      <nav class="footer-nav">
+        <a href="index.html">ホーム</a>
+        <a href="essays.html">考察一覧</a>
+        <a href="statement.html">reframe magazineとは</a>
+        <a href="contact.html">お問い合わせ</a>
+      </nav>
+      <div class="footer-social"><a href="https://x.com/yama_writer05" target="_blank" rel="noopener">X</a><a href="#">Instagram</a></div>
+    </div>
+    <div class="footer-bottom">© 2025 reframe magazine &nbsp;|&nbsp; <a href="privacy.html" style="color:var(--fg-light);border-bottom:1px solid var(--border-light);">プライバシーポリシー</a></div>
+  </div>
+</footer>
+
+<script>
+  // Reading progress
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    document.getElementById('progressBar').style.width = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight) * 100) + '%';
+  });
+
+  // Share URLs
+  const shareUrl = encodeURIComponent(location.href);
+  const shareText = encodeURIComponent('『タツキ先生は甘すぎる！』が描く"期待"の呪縛——町田啓太の演技から読み解く「甘さ」の真意 | reframe magazine');
+
+  document.getElementById('shareXBtn').href =
+    'https://twitter.com/intent/tweet?url=' + shareUrl + '&text=' + shareText;
+
+  document.getElementById('shareBottomX').href =
+    'https://twitter.com/intent/tweet?url=' + shareUrl + '&text=' + shareText;
+  document.getElementById('shareBottomLine').href =
+    'https://social-plugins.line.me/lineit/share?url=' + shareUrl;
+  document.getElementById('shareBottomFb').href =
+    'https://www.facebook.com/sharer/sharer.php?u=' + shareUrl;
+  document.getElementById('shareBottomCopy').addEventListener('click', () => {
+    navigator.clipboard.writeText(location.href).then(() => {
+      const btn = document.getElementById('shareBottomCopy');
+      const orig = btn.textContent;
+      btn.textContent = 'コピーしました';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
+    });
+  });
+
+  // Copy link (floating)
+  document.getElementById('copyLinkBtn').addEventListener('click', () => {
+    navigator.clipboard.writeText(location.href).then(() => {
+      const btn = document.getElementById('copyLinkBtn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓';
+      setTimeout(() => { btn.innerHTML = orig; }, 1500);
+    });
+  });
+
+  // Dark mode
+  const savedTheme = localStorage.getItem('rf-theme') || 'light';
+  if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  document.getElementById('darkToggle').addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('rf-theme', isDark ? 'light' : 'dark');
+  });
+
+  // Search
+  document.getElementById('searchBtn').addEventListener('click', () => {
+    document.getElementById('searchOverlay').classList.add('active');
+    setTimeout(() => document.querySelector('.search-input').focus(), 50);
+  });
+  document.getElementById('searchClose').addEventListener('click', () => document.getElementById('searchOverlay').classList.remove('active'));
+
+  // Hamburger
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+  document.getElementById('mobileNavClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+
+  // Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('searchOverlay').classList.remove('active');
+      document.getElementById('mobileNav').classList.remove('open');
+    }
+  });
+
+  // Fade in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 60); });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+<script async src="//www.instagram.com/embed.js"></script>
+</body>
+</html>
