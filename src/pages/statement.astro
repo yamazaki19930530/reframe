@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="reframe magazineとは" activeNav="statement">
+  <style>
+    .site-main { max-width: 760px; margin: 0 auto; padding: 48px var(--page-pad) 80px; }
+    .breadcrumb { font-size: 11px; color: var(--fg-light); letter-spacing: 0.06em; margin-bottom: 12px; }
+    .breadcrumb a { transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--fg); }
+    .page-title { font-family: var(--serif); font-size: 64px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1; margin-bottom: 28px; }
+    .page-tagline { font-family: var(--serif); font-size: 20px; font-weight: 400; line-height: 1.7; color: var(--fg); margin-bottom: 48px; letter-spacing: 0.02em; }
+    .profile-grid { display: grid; grid-template-columns: 200px 1fr; gap: 32px; margin-bottom: 56px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .profile-img-wrap { aspect-ratio: 3/4; overflow: hidden; background: #1c1b19; }
+    .profile-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .profile-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-light); margin-bottom: 10px; }
+    .profile-name { font-family: var(--serif); font-size: 26px; font-weight: 500; margin-bottom: 4px; letter-spacing: 0.02em; }
+    .profile-role { font-size: 12px; color: var(--fg-light); letter-spacing: 0.06em; margin-bottom: 20px; }
+    .profile-bio { font-size: 13px; color: var(--fg-mid); line-height: 1.95; margin-bottom: 24px; }
+    .section-label { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: var(--fg); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .about-body { margin-bottom: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--border); }
+    .about-body p { font-size: 14px; color: var(--fg-mid); line-height: 2.1; margin-bottom: 1.5em; }
+    .about-body p:last-child { margin-bottom: 0; }
+    .about-body p.lead { font-family: var(--serif); font-size: 16px; color: var(--fg); line-height: 1.9; }
+    .follow-section { margin-bottom: 0; }
+    .follow-links { display: flex; align-items: center; gap: 20px; margin-top: 12px; }
+    .follow-link { font-size: 13px; color: var(--fg-mid); letter-spacing: 0.04em; transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
+    .follow-link:hover { color: var(--fg); }
+    .follow-icon { width: 20px; height: 20px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; }
+    @media (max-width: 640px) {
+      .page-title { font-size: 44px; }
+      .profile-grid { grid-template-columns: 1fr; }
+      .profile-img-wrap { aspect-ratio: 4/3; }
+    }
+  </style>
+
+  <main class="site-main">
+    <div class="breadcrumb fade-in">
+      <a href="/">reframe</a> /
+    </div>
+
+    <h1 class="page-title fade-in">reframe magazine<br>とは</h1>
+
+    <p class="page-tagline fade-in">「観た」で終わらせない。</p>
+
+    <div class="about-body fade-in">
+      <p class="lead">「reframe」とは、物語を別の視点で捉え直すことです。</p>
+      <p>同じ作品でも、見る角度が変わると、まったく違うものが見えてきます。脚本の設計、演出の意図、感情を動かす仕掛け——それを知ったとき、「観た」体験はもう一度深くなります。reframe magazineは、その視点の転換を届けることを目的としています。</p>
+      <p>感覚ではなく、構造から。印象ではなく、言語から。「なぜこのシーンで涙が出るのか」「なぜあのキャラクターが忘れられないのか」——その問いを、言葉にしていきます。</p>
+    </div>
+
+    <div class="profile-grid fade-in">
+      <div class="profile-img-wrap">
+        <img src="/uploads/profile.png" alt="山崎裕太">
+      </div>
+      <div class="profile-info">
+        <div class="profile-label">Profile</div>
+        <div class="profile-name">山崎 裕太</div>
+        <div class="profile-role">ライター / コラムニスト</div>
+        <p class="profile-bio">脚本術と物語構造の研究を軸に、映画・ドラマの考察記事を執筆。脚本家としての活動も並行し、Webライターとしてコンテンツ制作やSEOライティングに携わる。</p>
+      </div>
+    </div>
+
+    <div class="follow-section fade-in">
+      <div class="section-label">Follow</div>
+      <div class="follow-links">
+        <a class="follow-link" href="https://x.com/yama_writer05" target="_blank" rel="noopener">
+          <span class="follow-icon">X</span>
+        </a>
+        <a class="follow-link" href="#">
+          <span class="follow-icon">ig</span>
+        </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

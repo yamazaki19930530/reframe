@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="プライバシーポリシー — reframe magazine">
+  <style>
+    .site-main { max-width: 720px; margin: 0 auto; padding: 48px var(--page-pad) 80px; }
+    .breadcrumb { font-size: 11px; color: var(--fg-light); letter-spacing: 0.06em; margin-bottom: 32px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--fg); }
+    .page-title { font-family: var(--serif); font-size: 44px; font-weight: 400; margin-bottom: 8px; line-height: 1.3; }
+    .page-updated { font-size: 11px; color: var(--fg-light); letter-spacing: 0.06em; margin-bottom: 48px; }
+    .policy-section { margin-bottom: 48px; }
+    .policy-section-num { font-family: var(--serif); font-size: 11px; color: var(--fg-light); letter-spacing: 0.1em; margin-bottom: 8px; }
+    .policy-section-title { font-family: var(--serif); font-size: 20px; font-weight: 500; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .policy-body p { font-size: 13px; color: var(--fg-mid); line-height: 2; margin-bottom: 1em; }
+    .policy-body p a { border-bottom: 1px solid var(--border); transition: border-color 0.2s; }
+    .policy-body p a:hover { border-color: var(--fg); }
+    .policy-list { font-size: 13px; color: var(--fg-mid); line-height: 2; padding-left: 1.4em; margin-bottom: 1em; }
+    .ga-box { border: 1px solid var(--border); padding: 16px 20px; margin: 16px 0; font-size: 12px; color: var(--fg-mid); line-height: 1.9; }
+    .ga-box-title { font-weight: 500; color: var(--fg); margin-bottom: 8px; font-size: 12px; letter-spacing: 0.04em; }
+    .ga-box-body a { border-bottom: 1px solid var(--border); }
+    .citation-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 16px 0; }
+    .citation-table th, .citation-table td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; color: var(--fg-mid); }
+    .citation-table th { color: var(--fg); font-weight: 500; background: color-mix(in srgb, var(--bg) 85%, var(--fg) 5%); }
+    .policy-note { font-size: 12px; color: var(--fg-light); line-height: 1.9; padding-top: 32px; border-top: 1px solid var(--border); }
+    .policy-note a { border-bottom: 1px solid var(--border-light); }
+  </style>
+
+  <main class="site-main">
+    <nav class="breadcrumb fade-in">
+      <a href="/">reframe</a>
+      <span style="color:var(--border);">/</span>
+      <span style="color:var(--fg-mid);">プライバシーポリシー & 免責事項</span>
+    </nav>
+
+    <h1 class="page-title fade-in">プライバシーポリシー<br>&amp; 免責事項</h1>
+    <p class="page-updated fade-in">最終更新：2024年6月1日</p>
+
+    <div class="policy-section fade-in">
+      <div class="policy-section-num">01</div>
+      <div class="policy-section-title">個人情報の取り扱い</div>
+      <div class="policy-body">
+        <p>reframe（以下「当サイト」）は、お問い合わせフォームを通じてお名前・メールアドレス等の個人情報をお預かりする場合があります。取得した個人情報は、以下の目的にのみ使用し、第三者への提供は行いません。</p>
+        <ul class="policy-list">
+          <li>お問い合わせへの返信</li>
+          <li>執筆依頼・業務委託に関する連絡</li>
+          <li>当サイトの運営改善に関する調査</li>
+        </ul>
+        <p>個人情報の開示・訂正・削除をご希望の場合は、<a href="/contact">お問い合わせフォーム</a>よりご連絡ください。合理的な期間内に対応いたします。</p>
+      </div>
+    </div>
+
+    <div class="policy-section fade-in">
+      <div class="policy-section-num">02</div>
+      <div class="policy-section-title">アクセス解析ツールについて</div>
+      <div class="policy-body">
+        <p>当サイトでは、Googleが提供するアクセス解析ツール「Google Analytics 4（GA4）」を使用しています。GA4はCookieを使用してデータを収集しますが、個人を特定する情報は含まれません。</p>
+        <div class="ga-box">
+          <div class="ga-box-title">Google Analytics 4 の概要</div>
+          <div class="ga-box-body">
+            収集データ：閲覧ページ・滞在時間・流入元・デバイス情報など。<br>
+            データの管理者：Google LLC（米国）<br>
+            データの利用目的：当サイトの利用状況の把握・コンテンツ改善<br>
+            オプトアウト：<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google アナリティクス オプトアウト アドオン</a>からいつでも無効化できます。
+          </div>
+        </div>
+        <p>GA4の詳細については、<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Googleプライバシーポリシー</a>をご確認ください。</p>
+      </div>
+    </div>
+
+    <div class="policy-section fade-in">
+      <div class="policy-section-num">03</div>
+      <div class="policy-section-title">著作権・画像引用について</div>
+      <div class="policy-body">
+        <p>当サイトに掲載されているテキストコンテンツ（考察文・編集構成）の著作権は、特に断りのない限り当サイト運営者に帰属します。無断転載・複製・改変はご遠慮ください。</p>
+        <p>映画・ドラマのスチール写真・ポスター画像については、以下のガイドラインに従い、報道・批評・教育を目的とした引用の範囲内で使用しています。</p>
+        <table class="citation-table">
+          <thead><tr><th>項目</th><th>方針</th></tr></thead>
+          <tbody>
+            <tr><td>使用目的</td><td>映画・ドラマの考察・批評に限定。商業目的での使用は行いません。</td></tr>
+            <tr><td>出典表記</td><td>各画像に作品名・配給会社・制作年を明記します。</td></tr>
+            <tr><td>使用範囲</td><td>原則として作品全体の内容を代替しない最小限の使用に留めます。</td></tr>
+            <tr><td>削除要請</td><td>権利者からの削除要請には速やかに対応いたします。</td></tr>
+          </tbody>
+        </table>
+        <p>画像の権利に関するお問い合わせは、<a href="/contact">こちらのフォーム</a>よりご連絡ください。</p>
+      </div>
+    </div>
+
+    <div class="policy-section fade-in">
+      <div class="policy-section-num">04</div>
+      <div class="policy-section-title">免責事項</div>
+      <div class="policy-body">
+        <p>当サイトに掲載する考察・解説は、運営者個人の見解に基づくものです。作品の公式見解・制作意図を代表するものではありません。</p>
+        <ul class="policy-list">
+          <li>当サイトの情報を参照した結果生じたいかなる損害についても、運営者は責任を負いかねます。</li>
+          <li>外部リンク先のコンテンツについては、各リンク先の管理者が責任を負います。</li>
+          <li>掲載情報は予告なく変更・削除される場合があります。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="policy-section fade-in">
+      <div class="policy-section-num">05</div>
+      <div class="policy-section-title">ポリシーの改定</div>
+      <div class="policy-body">
+        <p>本ポリシーは、法令の改正やサービス変更に伴い、予告なく改定される場合があります。改定後のポリシーは当ページに掲載した時点から効力を持つものとします。</p>
+      </div>
+    </div>
+
+    <div class="policy-note fade-in">
+      本ポリシーに関するご質問は <a href="/contact">お問い合わせフォーム</a> よりご連絡ください。<br>
+      © 2025 reframe magazine — 運営者：山崎 裕太
+    </div>
+  </main>
+</BaseLayout>

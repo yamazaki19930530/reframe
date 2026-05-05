@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Contact — reframe magazine" activeNav="contact">
+  <style>
+    .site-main { max-width: 600px; margin: 0 auto; padding: 48px var(--page-pad) 80px; }
+    .page-title { font-family: var(--serif); font-size: 56px; font-weight: 400; letter-spacing: -0.01em; margin-bottom: 10px; }
+    .page-subtitle { font-size: 13px; color: var(--fg-mid); line-height: 1.9; margin-bottom: 48px; }
+    .contact-form { display: flex; flex-direction: column; gap: 28px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-label { font-size: 12px; letter-spacing: 0.08em; color: var(--fg); font-weight: 500; }
+    .form-input, .form-textarea {
+      width: 100%; background: none; border: none; border-bottom: 1px solid var(--border);
+      outline: none; font-family: var(--sans); font-size: 14px; color: var(--fg);
+      padding: 10px 0; transition: border-color 0.2s; letter-spacing: 0.02em;
+      border-radius: 0; -webkit-appearance: none;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--fg-light); font-size: 13px; }
+    .form-input:focus, .form-textarea:focus { border-bottom-color: var(--fg); }
+    .form-input.error, .form-textarea.error { border-bottom-color: #c0392b; }
+    .form-textarea { resize: none; height: 120px; line-height: 1.8; }
+    .form-error { font-size: 11px; color: #c0392b; letter-spacing: 0.04em; display: none; }
+    .form-error.visible { display: block; }
+    .char-counter { font-size: 11px; color: var(--fg-light); text-align: right; margin-top: 4px; }
+    .submit-row { display: flex; align-items: stretch; margin-top: 8px; }
+    .submit-btn {
+      flex: 1; background: var(--fg); color: var(--bg); border: none; padding: 18px 32px;
+      font-family: var(--serif); font-size: 18px; letter-spacing: 0.22em; cursor: pointer;
+      transition: opacity 0.2s; display: flex; align-items: center; justify-content: center;
+    }
+    .submit-btn:hover { opacity: 0.8; }
+    .submit-icon {
+      width: 52px; background: var(--fg-mid); display: flex; align-items: center;
+      justify-content: center; font-size: 20px; color: var(--bg); flex-shrink: 0;
+      cursor: pointer; transition: background 0.2s; border: none;
+    }
+    .submit-icon:hover { background: var(--fg); }
+    .success-message { display: none; text-align: center; padding: 64px 0; }
+    .success-message.visible { display: block; }
+    .success-mark { font-size: 28px; color: var(--fg-light); margin-bottom: 16px; }
+    .success-title { font-family: var(--serif); font-size: 28px; margin-bottom: 12px; }
+    .success-text { font-size: 13px; color: var(--fg-mid); line-height: 1.9; }
+    @media (max-width: 480px) { .page-title { font-size: 40px; } }
+  </style>
+
+  <main class="site-main">
+    <h1 class="page-title fade-in">Contact</h1>
+    <p class="page-subtitle fade-in">執筆依頼・お仕事のご相談など、<br>お気軽にお問い合わせください。</p>
+
+    <form class="contact-form fade-in" id="contactForm" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="name">お名前</label>
+        <input class="form-input" id="name" name="name" type="text" placeholder="山田 太郎" autocomplete="name" />
+        <span class="form-error" id="name-error">お名前を入力してください。</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">メールアドレス</label>
+        <input class="form-input" id="email" name="email" type="email" placeholder="example@email.com" autocomplete="email" />
+        <span class="form-error" id="email-error">有効なメールアドレスを入力してください。</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="subject">件名</label>
+        <input class="form-input" id="subject" name="subject" type="text" placeholder="件名を入力してください" />
+        <span class="form-error" id="subject-error">件名を入力してください。</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="message">内容</label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="お問い合わせ内容をご入力ください。" maxlength="1000"></textarea>
+        <div class="char-counter"><span id="char-count">0</span> / 1000</div>
+        <span class="form-error" id="message-error">内容を入力してください。</span>
+      </div>
+      <div class="submit-row">
+        <button class="submit-btn" type="submit">s e n d</button>
+        <button class="submit-icon" type="submit" aria-label="送信">→</button>
+      </div>
+    </form>
+
+    <div class="success-message" id="successMessage">
+      <div class="success-mark">✓</div>
+      <div class="success-title">送信しました</div>
+      <p class="success-text">お問い合わせありがとうございます。<br>内容を確認のうえ、数日以内にご連絡いたします。</p>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('message')?.addEventListener('input', function(this: HTMLTextAreaElement) {
+      const el = document.getElementById('char-count');
+      if (el) el.textContent = String(this.value.length);
+    });
+
+    function validate() {
+      let valid = true;
+      const fields = [
+        { id: 'name', errorId: 'name-error', check: (v: string) => v.trim().length > 0 },
+        { id: 'email', errorId: 'email-error', check: (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
+        { id: 'subject', errorId: 'subject-error', check: (v: string) => v.trim().length > 0 },
+        { id: 'message', errorId: 'message-error', check: (v: string) => v.trim().length > 0 },
+      ];
+      fields.forEach(f => {
+        const el = document.getElementById(f.id) as HTMLInputElement;
+        const err = document.getElementById(f.errorId);
+        if (!f.check(el.value)) { el.classList.add('error'); err?.classList.add('visible'); valid = false; }
+        else { el.classList.remove('error'); err?.classList.remove('visible'); }
+      });
+      return valid;
+    }
+
+    ['name','email','subject','message'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', function(this: HTMLElement) {
+        this.classList.remove('error');
+        document.getElementById(id + '-error')?.classList.remove('visible');
+      });
+    });
+
+    document.getElementById('contactForm')?.addEventListener('submit', async function(this: HTMLFormElement, e) {
+      e.preventDefault();
+      if (!validate()) return;
+      const data = new FormData(this);
+      try {
+        const res = await fetch('https://formspree.io/f/xrejppgq', {
+          method: 'POST', body: data, headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          this.style.display = 'none';
+          document.getElementById('successMessage')?.classList.add('visible');
+        } else {
+          alert('送信に失敗しました。もう一度お試しください。');
+        }
+      } catch {
+        alert('送信に失敗しました。もう一度お試しください。');
+      }
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,285 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface TocItem {
+  id: string;
+  text: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  date: string;
+  tags: string[];
+  eyecatch: string;
+  eyecatchCaption?: string;
+  toc?: TocItem[];
+  breadcrumbLabel: string;
+}
+
+const {
+  title,
+  description,
+  category,
+  date,
+  tags,
+  eyecatch,
+  eyecatchCaption = '',
+  toc = [],
+  breadcrumbLabel,
+} = Astro.props;
+
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://reframemagazine.jp';
+const ogImage = eyecatch.startsWith('http')
+  ? eyecatch
+  : `${siteOrigin}${eyecatch.startsWith('/') ? '' : '/'}${eyecatch}`;
+const pageUrl = Astro.url.href;
+---
+<BaseLayout
+  title={title}
+  description={description}
+  ogType="article"
+  ogImage={ogImage}
+  ogUrl={pageUrl}
+>
+  <style slot="head">
+    .site-main { max-width: 720px; margin: 0 auto; padding: 48px var(--page-pad) 80px; }
+
+    .breadcrumb { font-size: 11px; color: var(--fg-light); letter-spacing: 0.06em; margin-bottom: 32px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--fg); }
+    .breadcrumb span { color: var(--border); }
+
+    .article-header { margin-bottom: 40px; }
+    .article-category { font-size: 11px; letter-spacing: 0.1em; color: var(--fg-light); margin-bottom: 16px; }
+    .article-title { font-family: var(--serif); font-size: 40px; font-weight: 500; line-height: 1.45; letter-spacing: 0.01em; margin-bottom: 24px; }
+    .article-meta { display: flex; align-items: center; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--border-light); }
+    .article-date { font-size: 12px; color: var(--fg-light); letter-spacing: 0.04em; }
+    .article-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .article-tag { font-size: 10px; letter-spacing: 0.06em; color: var(--fg-light); border: 1px solid var(--border); padding: 2px 10px; }
+
+    .article-hero {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background-color: #1c1b19;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: flex-end;
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .article-hero-caption { font-size: 9px; font-family: monospace; color: #666; letter-spacing: 0.05em; }
+
+    .article-body { font-family: var(--serif); font-size: 18px; line-height: 2; color: var(--fg); }
+    .article-body p { margin-bottom: 1.6em; }
+    .article-body h2 {
+      font-family: var(--serif); font-size: 26px; font-weight: 600;
+      margin: 2.8em 0 0.9em; padding: 0 0 12px 16px;
+      border-left: 3px solid var(--fg); border-bottom: 1px solid var(--border-light);
+      letter-spacing: 0.02em; line-height: 1.5;
+    }
+    .article-body blockquote {
+      border-left: 2px solid var(--border); padding: 4px 0 4px 24px;
+      margin: 1.6em 0; color: var(--fg-mid); font-style: italic;
+    }
+    .article-body .pull-quote {
+      font-size: 22px; font-style: italic; color: var(--fg-mid);
+      text-align: center; padding: 32px 0;
+      border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
+      margin: 2em 0; line-height: 1.6;
+    }
+
+    .toc { border: 1px solid var(--border); padding: 20px 24px; margin-bottom: 40px; font-size: 13px; }
+    .toc-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-light); margin-bottom: 12px; }
+    .toc ol { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .toc li a { color: var(--fg-mid); transition: color 0.2s; }
+    .toc li a:hover { color: var(--fg); }
+
+    .author-section { margin-top: 56px; padding: 28px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .author-block { display: flex; align-items: flex-start; gap: 20px; text-decoration: none; transition: opacity 0.2s; }
+    .author-block:hover { opacity: 0.75; }
+    .author-avatar { width: 56px; height: 56px; flex-shrink: 0; overflow: hidden; background: #1c1b19; }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .author-info { flex: 1; }
+    .author-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-light); margin-bottom: 5px; }
+    .author-name { font-family: var(--serif); font-size: 19px; font-weight: 500; color: var(--fg); margin-bottom: 2px; letter-spacing: 0.02em; }
+    .author-role { font-size: 12px; color: var(--fg-light); letter-spacing: 0.04em; margin-bottom: 10px; }
+    .author-bio { font-size: 12.5px; color: var(--fg-mid); line-height: 1.9; margin-bottom: 12px; }
+    .author-link { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--fg-light); letter-spacing: 0.06em; border-bottom: 1px solid var(--border-light); padding-bottom: 1px; transition: color 0.2s, border-color 0.2s; }
+    .author-block:hover .author-link { color: var(--fg); border-color: var(--border); }
+
+    .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--fg); width: 0%; z-index: 999; transition: width 0.1s linear; }
+
+    .share-bar {
+      position: fixed; left: calc(50% + 380px); top: 50%;
+      transform: translateY(-50%); display: flex; flex-direction: column;
+      gap: 14px; align-items: center;
+    }
+    .share-btn {
+      width: 36px; height: 36px; border: 1px solid var(--border);
+      background: var(--bg); cursor: pointer; display: flex;
+      align-items: center; justify-content: center; font-size: 11px;
+      color: var(--fg-mid); letter-spacing: 0.04em;
+      transition: border-color 0.2s, color 0.2s, background 0.2s; text-decoration: none;
+    }
+    .share-btn:hover { border-color: var(--fg); color: var(--fg); }
+
+    .share-section { margin: 48px 0 0; padding: 24px 0; border-top: 1px solid var(--border-light); }
+    .share-section-label { font-size: 11px; letter-spacing: 0.1em; color: var(--fg-light); margin-bottom: 16px; }
+    .share-section-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .share-section-btn {
+      border: 1px solid var(--border); padding: 8px 20px; font-size: 12px;
+      letter-spacing: 0.06em; color: var(--fg-mid); background: none; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s; text-decoration: none;
+      display: inline-block; font-family: var(--sans);
+    }
+    .share-section-btn:hover { border-color: var(--fg); color: var(--fg); }
+    .share-section-btn.copied { border-color: var(--fg); color: var(--fg); }
+
+    .ig-embed-wrap { margin: 2.4em auto; max-width: 100%; }
+    .ig-embed-wrap .instagram-media { margin: 0 auto !important; min-width: unset !important; max-width: 100% !important; width: 100% !important; }
+
+    @media (max-width: 1100px) { .share-bar { display: none; } }
+    @media (max-width: 640px) {
+      .article-title { font-size: 26px; }
+      .article-body { font-size: 16px; }
+      .toc { display: none; }
+    }
+  </style>
+
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Floating share bar -->
+  <div class="share-bar">
+    <a class="share-btn" id="shareXBtn" target="_blank" rel="noopener" title="Xでシェア">X</a>
+    <button class="share-btn" id="copyLinkBtn" title="リンクをコピー">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+      </svg>
+    </button>
+  </div>
+
+  <main class="site-main">
+
+    <nav class="breadcrumb fade-in">
+      <a href="/">reframe</a>
+      <span>/</span>
+      <a href="/essays">考察一覧</a>
+      <span>/</span>
+      <span style="color:var(--fg-mid);">{breadcrumbLabel}</span>
+    </nav>
+
+    <header class="article-header fade-in">
+      <div class="article-category">{category}</div>
+      <h1 class="article-title" set:html={title}></h1>
+      <div class="article-meta">
+        <span class="article-date">{date}</span>
+        <div class="article-tags">
+          {tags.map(tag => <span class="article-tag">{tag}</span>)}
+        </div>
+      </div>
+    </header>
+
+    <div
+      class="article-hero fade-in"
+      style={`background-image: url('${eyecatch}')`}
+    >
+      {eyecatchCaption && <span class="article-hero-caption">{eyecatchCaption}</span>}
+    </div>
+
+    {toc.length > 0 && (
+      <div class="toc fade-in">
+        <div class="toc-title">目次</div>
+        <ol>
+          {toc.map(item => (
+            <li><a href={`#${item.id}`}>{item.text}</a></li>
+          ))}
+        </ol>
+      </div>
+    )}
+
+    <article class="article-body fade-in">
+      <slot />
+    </article>
+
+    <!-- Share -->
+    <div class="share-section fade-in">
+      <div class="share-section-label">この記事をシェア</div>
+      <div class="share-section-btns">
+        <a class="share-section-btn" id="shareBottomX" target="_blank" rel="noopener">X (Twitter)</a>
+        <a class="share-section-btn" id="shareBottomLine" target="_blank" rel="noopener">LINE</a>
+        <a class="share-section-btn" id="shareBottomFb" target="_blank" rel="noopener">Facebook</a>
+        <button class="share-section-btn" id="shareBottomCopy">リンクをコピー</button>
+      </div>
+    </div>
+
+    <!-- Author -->
+    <section class="author-section fade-in">
+      <a class="author-block" href="/statement">
+        <div class="author-avatar"><img src="/uploads/profile.png" alt="山崎裕太"></div>
+        <div class="author-info">
+          <div class="author-label">Written by</div>
+          <div class="author-name">山崎 裕太</div>
+          <div class="author-role">脚本家志望 / Webライター</div>
+          <p class="author-bio">脚本術と物語構造の研究を軸に、映画・ドラマの考察記事を執筆。脚本家としての活動も並行し、Webライターとしてコンテンツ制作に携わる。</p>
+          <span class="author-link">プロフィールを見る →</span>
+        </div>
+      </a>
+    </section>
+
+  </main>
+
+  <script>
+    // Progress bar
+    const progressBar = document.getElementById('progressBar');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      if (progressBar) progressBar.style.width = `${progress}%`;
+    });
+
+    // Share URLs
+    const url = encodeURIComponent(location.href);
+    const text = encodeURIComponent(document.title);
+
+    const xUrl = `https://x.com/intent/tweet?url=${url}&text=${text}`;
+    const lineUrl = `https://social-plugins.line.me/lineit/share?url=${url}`;
+    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+
+    document.getElementById('shareXBtn')?.setAttribute('href', xUrl);
+    document.getElementById('shareBottomX')?.setAttribute('href', xUrl);
+    document.getElementById('shareBottomLine')?.setAttribute('href', lineUrl);
+    document.getElementById('shareBottomFb')?.setAttribute('href', fbUrl);
+
+    // Copy link
+    async function copyLink(btnId: string) {
+      const btn = document.getElementById(btnId);
+      if (!btn) return;
+      await navigator.clipboard.writeText(location.href);
+      const orig = btn.textContent;
+      btn.textContent = 'コピーしました';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copied');
+      }, 2000);
+    }
+    document.getElementById('copyLinkBtn')?.addEventListener('click', () => copyLink('copyLinkBtn'));
+    document.getElementById('shareBottomCopy')?.addEventListener('click', () => copyLink('shareBottomCopy'));
+
+    // Instagram embed
+    if (document.querySelector('.instagram-media')) {
+      const s = document.createElement('script');
+      s.src = 'https://www.instagram.com/embed.js';
+      s.async = true;
+      document.body.appendChild(s);
+    }
+  </script>
+</BaseLayout>

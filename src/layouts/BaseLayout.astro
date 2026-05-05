@@ -1,0 +1,180 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  ogUrl?: string;
+  activeNav?: string;
+}
+
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://reframemagazine.jp';
+
+const {
+  title,
+  description = '映画・ドラマを構造から読み解く考察メディア',
+  ogType = 'website',
+  ogImage = `${siteOrigin}/uploads/logo.png`,
+  ogUrl = Astro.url.href,
+  activeNav = '',
+} = Astro.props;
+
+const siteTitle = title.includes('reframe') ? title : `${title} — reframe magazine`;
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{siteTitle}</title>
+  {description && <meta name="description" content={description} />}
+
+  <!-- OGP -->
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content="reframe magazine" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={ogUrl} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="720" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2VWWQDWPM5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(...args: any[]){ (window as any).dataLayer.push(args); }
+    gtag('js', new Date());
+    gtag('config', 'G-2VWWQDWPM5');
+  </script>
+
+  <!-- Dark mode FOUC prevention -->
+  <script is:inline>
+    (function(){
+      var t = localStorage.getItem('rf-theme') || 'light';
+      if(t === 'dark') document.documentElement.setAttribute('data-theme','dark');
+    })();
+  </script>
+
+  <slot name="head" />
+</head>
+<body>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+  <a href="/">ホーム</a>
+  <a href="/essays">考察一覧</a>
+  <a href="/statement">reframe magazineとは</a>
+  <a href="/contact">お問い合わせ</a>
+</div>
+
+<!-- Search overlay -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-form">
+    <button class="search-close" id="searchClose">✕</button>
+    <input class="search-input" type="text" placeholder="キーワードで検索..." />
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="header-top">映画・ドラマの考察メディア
+    <button class="dark-toggle" id="darkToggle" aria-label="ダークモード切替"></button>
+  </div>
+  <div class="header-main">
+    <a class="logo" href="/">
+      <span class="logo-text">reframe magazine</span>
+    </a>
+    <nav class="header-nav">
+      <a href="/" class={activeNav === 'home' ? 'active' : ''}>ホーム</a>
+      <a href="/essays" class={activeNav === 'essays' ? 'active' : ''}>考察一覧</a>
+      <a href="/statement" class={activeNav === 'statement' ? 'active' : ''}>reframe magazineとは</a>
+      <a href="/contact" class={activeNav === 'contact' ? 'active' : ''}>お問い合わせ</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="nav-search" id="searchBtn" aria-label="検索">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Page content -->
+<slot />
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a class="footer-logo" href="/">
+        <span class="logo-text-sm">reframe magazine</span>
+      </a>
+      <nav class="footer-nav">
+        <a href="/">ホーム</a>
+        <a href="/essays">考察一覧</a>
+        <a href="/statement">reframe magazineとは</a>
+        <a href="/contact">お問い合わせ</a>
+      </nav>
+      <div class="footer-social">
+        <a href="https://x.com/yama_writer05" target="_blank" rel="noopener">X</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 reframe magazine &nbsp;|&nbsp; <a href="/privacy" style="color:var(--fg-light);border-bottom:1px solid var(--border-light);">プライバシーポリシー</a></div>
+  </div>
+</footer>
+
+<script>
+  // Dark mode toggle
+  const darkToggle = document.getElementById('darkToggle');
+  darkToggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('rf-theme', isDark ? 'light' : 'dark');
+  });
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  const mobileNavClose = document.getElementById('mobileNavClose');
+  hamburger?.addEventListener('click', () => mobileNav?.classList.add('open'));
+  mobileNavClose?.addEventListener('click', () => mobileNav?.classList.remove('open'));
+
+  // Search overlay
+  const searchBtn = document.getElementById('searchBtn');
+  const searchOverlay = document.getElementById('searchOverlay');
+  const searchClose = document.getElementById('searchClose');
+  searchBtn?.addEventListener('click', () => searchOverlay?.classList.add('open'));
+  searchClose?.addEventListener('click', () => searchOverlay?.classList.remove('open'));
+
+  // Fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

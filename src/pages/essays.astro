@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles');
+const essays = allArticles
+  .sort((a, b) => b.data.date.localeCompare(a.data.date))
+  .map(a => ({
+    title: a.data.title,
+    category: a.data.category,
+    genre: a.data.genre,
+    excerpt: a.data.excerpt,
+    date: a.data.date,
+    tags: a.data.tags,
+    featured: a.data.featured,
+    href: `/articles/${a.id}`,
+    img: a.data.eyecatch,
+  }));
+---
+<BaseLayout title="考察一覧 — reframe magazine" activeNav="essays">
+  <style is:global>
+    .site-main { max-width: 920px; margin: 0 auto; padding: 48px var(--page-pad) 80px; }
+    .page-header { margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--fg); }
+    .page-title { font-family: var(--serif); font-size: 48px; font-weight: 400; letter-spacing: -0.01em; margin-bottom: 12px; }
+    .page-subtitle { font-size: 13px; color: var(--fg-mid); }
+    .filter-bar { display: flex; align-items: center; gap: 0; margin-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .filter-btn { background: none; border: none; cursor: pointer; font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--fg-light); padding: 10px 20px 10px 0; position: relative; transition: color 0.2s; }
+    .filter-btn:hover { color: var(--fg-mid); }
+    .filter-btn.active { color: var(--fg); font-weight: 500; }
+    .filter-btn.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: calc(100% - 20px); height: 1.5px; background: var(--fg); }
+    .essays-list { display: flex; flex-direction: column; gap: 0; }
+    .essay-item { display: grid; grid-template-columns: 160px 1fr; border-bottom: 1px solid var(--border-light); cursor: pointer; transition: background 0.18s; text-decoration: none; }
+    .essay-item:hover { background: color-mix(in srgb, var(--bg) 80%, var(--fg) 4%); }
+    .essay-item:hover .essay-arrow { opacity: 1; transform: translateX(0); }
+    .essay-item-img { aspect-ratio: 16/10; overflow: hidden; background: repeating-linear-gradient(-45deg, var(--border) 0, var(--border) 1px, var(--border-light) 1px, var(--border-light) 7px); }
+    .essay-item-body { padding: 24px 0 24px 28px; display: flex; flex-direction: column; justify-content: space-between; }
+    .essay-category { font-size: 10px; letter-spacing: 0.1em; color: var(--fg-light); margin-bottom: 8px; }
+    .essay-title { font-family: var(--serif); font-size: 20px; font-weight: 500; line-height: 1.55; color: var(--fg); margin-bottom: 10px; letter-spacing: 0.02em; }
+    .essay-excerpt { font-size: 12px; color: var(--fg-mid); line-height: 1.9; }
+    .essay-item-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+    .essay-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .essay-date { font-size: 11px; color: var(--fg-light); letter-spacing: 0.04em; }
+    .essay-tag { font-size: 10px; letter-spacing: 0.06em; color: var(--fg-light); border: 1px solid var(--border); padding: 2px 8px; transition: border-color 0.15s, color 0.15s; }
+    .essay-item:hover .essay-tag { border-color: var(--fg-mid); color: var(--fg-mid); }
+    .essay-arrow { font-size: 14px; color: var(--fg-mid); opacity: 0; transform: translateX(-6px); transition: opacity 0.2s, transform 0.2s; }
+    .essay-item.featured { grid-template-columns: 1fr; border-bottom: 1px solid var(--border); }
+    .essay-item.featured .essay-item-img { aspect-ratio: 16/9; }
+    .essay-item.featured .essay-item-body { padding: 28px 0; }
+    .essay-item.featured .essay-title { font-size: 28px; }
+    .load-more-wrap { text-align: center; margin-top: 40px; }
+    .load-more-btn { background: none; border: 1px solid var(--border); padding: 12px 40px; font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; color: var(--fg-mid); cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+    .load-more-btn:hover { border-color: var(--fg); color: var(--fg); }
+    @media (max-width: 640px) {
+      .essay-item { grid-template-columns: 1fr; }
+      .essay-item-img { aspect-ratio: 16/9; }
+      .essay-item-body { padding: 16px 0; }
+      .filter-bar { flex-wrap: wrap; }
+    }
+  </style>
+
+  <main class="site-main">
+    <div class="page-header fade-in">
+      <h1 class="page-title">考察一覧</h1>
+      <p class="page-subtitle">映画・ドラマの物語構造・テーマ・演出を読み解く記事。</p>
+    </div>
+
+    <div class="filter-bar fade-in">
+      <button class="filter-btn active" data-filter="all">すべて</button>
+      <button class="filter-btn" data-filter="映画">映画</button>
+      <button class="filter-btn" data-filter="ドラマ">ドラマ</button>
+      <button class="filter-btn" data-filter="アニメ">アニメ</button>
+    </div>
+
+    <div class="essays-list" id="essaysList"></div>
+
+    <div class="load-more-wrap fade-in">
+      <button class="load-more-btn" id="loadMoreBtn">もっと見る</button>
+    </div>
+  </main>
+
+  <script define:vars={{ essays }}>
+    // essays injected from Astro content collection via define:vars
+
+    const PER_PAGE = 5;
+    let shown = 0;
+    let currentFilter = 'all';
+
+    function filtered() {
+      return currentFilter === 'all' ? essays : essays.filter((e) => e.genre === currentFilter);
+    }
+
+    function renderItem(e, featured) {
+      const div = document.createElement('a');
+      div.className = 'essay-item fade-in' + (featured ? ' featured' : '');
+      div.href = e.href;
+      div.dataset.genre = e.genre;
+      div.innerHTML = `
+        <div class="essay-item-img">${e.img ? `<img src="${e.img}" alt="${e.title}" style="width:100%;height:100%;object-fit:cover;display:block;">` : ''}</div>
+        <div class="essay-item-body">
+          <div class="essay-item-top">
+            <div class="essay-category">${e.category}</div>
+            <div class="essay-title">${e.title}</div>
+            <div class="essay-excerpt">${e.excerpt}</div>
+          </div>
+          <div class="essay-item-bottom">
+            <div class="essay-meta">
+              <span class="essay-date">${e.date}</span>
+              ${e.tags.map((t) => `<span class="essay-tag">${t}</span>`).join('')}
+            </div>
+            <span class="essay-arrow">→</span>
+          </div>
+        </div>
+      `;
+      return div;
+    }
+
+    function renderMore() {
+      const list = filtered();
+      const container = document.getElementById('essaysList');
+      const end = Math.min(shown + PER_PAGE, list.length);
+      for (let i = shown; i < end; i++) {
+        const el = renderItem(list[i], i === 0 && shown === 0);
+        container.appendChild(el);
+        setTimeout(() => el.classList.add('visible'), (i - shown) * 60);
+      }
+      shown = end;
+      const btn = document.getElementById('loadMoreBtn');
+      btn.style.display = shown >= list.length ? 'none' : '';
+    }
+
+    function reset() {
+      shown = 0;
+      document.getElementById('essaysList').innerHTML = '';
+      renderMore();
+    }
+
+    reset();
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        reset();
+      });
+    });
+
+    document.getElementById('loadMoreBtn')?.addEventListener('click', renderMore);
+  </script>
+</BaseLayout>

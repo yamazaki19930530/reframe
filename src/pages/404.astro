@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="404 — reframe magazine">
+  <style>
+    html, body { height: 100%; }
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+    .site-main {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: flex-start; padding: 48px var(--page-pad) 80px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .grain {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .error-content { position: relative; z-index: 1; max-width: 560px; }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border); padding: 5px 14px;
+      font-size: 10px; letter-spacing: 0.2em; color: var(--fg-light);
+      margin-bottom: 32px; background: var(--bg);
+    }
+    .status-dot {
+      width: 5px; height: 5px; border-radius: 50%; background: var(--fg-light);
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+    .error-num {
+      font-family: var(--serif); font-size: clamp(80px, 15vw, 140px); font-weight: 400;
+      line-height: 1; color: var(--fg); letter-spacing: -0.04em; margin-bottom: 16px;
+      -webkit-text-stroke: 1px var(--border);
+    }
+    .error-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-light); margin-bottom: 20px; }
+    .error-title { font-family: var(--serif); font-size: clamp(22px, 4vw, 34px); font-weight: 400; line-height: 1.55; color: var(--fg); margin-bottom: 16px; letter-spacing: 0.01em; }
+    .error-subtitle { font-size: 13px; color: var(--fg-mid); line-height: 1.9; margin-bottom: 48px; letter-spacing: 0.02em; }
+    .filmstrip { display: flex; align-items: center; gap: 4px; margin-bottom: 48px; justify-content: center; }
+    .frame { width: 56px; height: 40px; border: 1px solid var(--border); background: repeating-linear-gradient(-45deg, var(--border-light) 0, var(--border-light) 1px, transparent 1px, transparent 6px); }
+    .frame-missing { width: 56px; height: 40px; border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--border); }
+    .frame.broken { background: repeating-linear-gradient(135deg, var(--border) 0, var(--border) 1px, var(--border-light) 1px, var(--border-light) 4px); }
+    .error-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 80px; }
+    .btn-primary { background: var(--fg); color: var(--bg); padding: 14px 32px; font-size: 13px; letter-spacing: 0.08em; text-decoration: none; transition: opacity 0.2s; display: inline-block; }
+    .btn-primary:hover { opacity: 0.8; }
+    .btn-secondary { border: 1px solid var(--border); color: var(--fg-mid); padding: 14px 32px; font-size: 13px; letter-spacing: 0.08em; text-decoration: none; transition: border-color 0.2s, color 0.2s; display: inline-block; }
+    .btn-secondary:hover { border-color: var(--fg); color: var(--fg); }
+    .latest-section { position: relative; z-index: 1; width: 100%; max-width: 720px; text-align: left; }
+    .latest-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-light); margin-bottom: 16px; text-align: center; }
+    .latest-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-left: 1px solid var(--border); border-top: 1px solid var(--border); }
+    .latest-card { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px; text-decoration: none; display: block; transition: background 0.18s; background: var(--bg); }
+    .latest-card:hover { background: color-mix(in srgb, var(--bg) 80%, var(--fg) 4%); }
+    .latest-card-img { width: 100%; aspect-ratio: 16/9; background: repeating-linear-gradient(-45deg, var(--border) 0, var(--border) 1px, var(--border-light) 1px, var(--border-light) 6px); margin-bottom: 12px; }
+    .latest-card-cat { font-size: 10px; color: var(--fg-light); letter-spacing: 0.08em; margin-bottom: 6px; }
+    .latest-card-title { font-family: var(--serif); font-size: 15px; font-weight: 500; line-height: 1.55; color: var(--fg); }
+    @media (max-width: 640px) {
+      .latest-grid { grid-template-columns: 1fr; }
+      .error-actions { flex-direction: column; }
+      .filmstrip { display: none; }
+    }
+  </style>
+
+  <div class="grain"></div>
+  <main class="site-main">
+    <div class="error-content">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        REFRAME ERROR
+      </div>
+      <div class="error-num">404</div>
+      <div class="error-label">視点の再構築に失敗しました</div>
+      <h1 class="error-title">このページは、<br>まだフレームの外にあります。</h1>
+      <p class="error-subtitle">
+        URLが変更されたか、ページが存在しない可能性があります。<br>
+        物語の構造を読み解くには、正しい入口から入る必要があります。
+      </p>
+      <div class="filmstrip" aria-hidden="true">
+        <div class="frame"></div>
+        <div class="frame"></div>
+        <div class="frame"></div>
+        <div class="frame-missing">?</div>
+        <div class="frame broken"></div>
+        <div class="frame" style="opacity:0.3;"></div>
+        <div class="frame" style="opacity:0.1;"></div>
+      </div>
+      <div class="error-actions">
+        <a class="btn-primary" href="/">ホームに戻る →</a>
+        <a class="btn-secondary" href="/essays">考察一覧を見る</a>
+      </div>
+    </div>
+
+    <div class="latest-section">
+      <div class="latest-label">最新の考察 — 視点を切り替えてみてください</div>
+      <div class="latest-grid">
+        <a class="latest-card" href="/articles/tatsuki-sensei">
+          <div class="latest-card-img"></div>
+          <div class="latest-card-cat">ドラマ「タツキ先生は甘すぎる！」</div>
+          <div class="latest-card-title">『タツキ先生は甘すぎる！』が描く"期待"の呪縛</div>
+        </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
